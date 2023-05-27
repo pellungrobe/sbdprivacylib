@@ -94,7 +94,7 @@ class TestSPF(unittest.TestCase):
         print(self.fist_df)
         print(self.second_df)
 
-    def first_test(self):
+    def test_first(self):
         self.assertEqual(3,2,"non ho capito")
 
 if __name__ == '__main__':
