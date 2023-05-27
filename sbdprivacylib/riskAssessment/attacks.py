@@ -5,6 +5,7 @@ from . import constants
 from pandas.errors import AbstractMethodError
 import pandas as pd
 
+
 __all__ = ["ElementsAttack","SequenceAttack","TimeAttack","FrequencyAttack","ProbabilityAttack","ProportionAttack"]
 
 class BackgroundKnowledgeAttack(ABC):
