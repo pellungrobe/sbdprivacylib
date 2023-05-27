@@ -1,4 +1,4 @@
-{% set name = "package_name" %}
+{% set name = "sbdprivacylib" %}
 {% set version = "0.0.1" %}
 
 package:
@@ -31,7 +31,7 @@ about:
   license_family: "BSD"
   license_file: ""
   summary: "Description of the package"
-  doc_url: "https://package_name.readthedocs.io/"
+  doc_url: "https://sbdprivacylib.readthedocs.io/"
   dev_url: "https://github.com/USERNAME/project"
 
 extra:

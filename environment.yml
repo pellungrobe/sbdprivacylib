@@ -1,4 +1,4 @@
-name: package_name
+name: sbdprivacylib
 dependencies:
 - python>=3.8
 - numpy
