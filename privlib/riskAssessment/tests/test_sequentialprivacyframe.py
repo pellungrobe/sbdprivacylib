@@ -1,4 +1,5 @@
 from privlib.riskAssessment import constants
+from privlib.riskAssessment.sequentialprivacyframe import SequentialPrivacyFrame as SPF
 import numpy as np
 import pandas as pd
 import unittest
@@ -81,7 +82,7 @@ class TestSPF(unittest.TestCase):
                                [43.7085300, 10.4036000],
                                [43.5442700, 10.3261500]])
 
-        trj2 = pd.DataFrame(lat_lons_2, columns=['lat', 'log'])
+        trj2 = pd.DataFrame(lat_lons_2, columns=['lat', 'lng'])
 
         trj2[constants.DATETIME] = pd.to_datetime(['20110203 8:34:04' for _ in range(36)])
 
@@ -91,11 +92,12 @@ class TestSPF(unittest.TestCase):
         self.fist_df = traj
         self.second_df = trj2
 
-        print(self.fist_df)
-        print(self.second_df)
+        self.first_instance = traj[:2].values
+        self.second_instance = pd.concat([traj[0:1], traj[3:4]]).values
 
-    def test_first(self):
-        self.assertEqual(3,3,"non ho capito")
+    def test_spf(self):
+        SPF(self.fist_df, user_id='uid', datetime='datetime', elements=['lat', 'lng'])
+        self.assertEqual(SPF.columns, ['datetime',	'uid', 'elements',	'sequence',	'order'])
 
 if __name__ == '__main__':
     unittest.main()
