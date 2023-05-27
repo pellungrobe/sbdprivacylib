@@ -1,8 +1,9 @@
-import pandas as pd
+
 from abc import ABC, abstractmethod
 from .utils import date_time_precision
 from . import constants
 from pandas.errors import AbstractMethodError
+import pandas as pd
 
 __all__ = ["ElementsAttack","SequenceAttack","TimeAttack","FrequencyAttack","ProbabilityAttack","ProportionAttack"]
 
