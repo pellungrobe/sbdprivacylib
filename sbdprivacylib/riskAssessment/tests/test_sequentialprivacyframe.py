@@ -1,4 +1,4 @@
-from SBD_priv_lib.riskAssessment import constants
+from sbdprivacylib.sbdprivacylib.riskAssessment import constants
 import numpy as np
 import pandas as pd
 import unittest
