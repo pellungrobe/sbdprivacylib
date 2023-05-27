@@ -1,4 +1,4 @@
-name: sbdprivacylib
+name: privlib
 dependencies:
 - python>=3.8
 - numpy

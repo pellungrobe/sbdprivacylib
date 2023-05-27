@@ -10,4 +10,4 @@ jobs:
       - uses: psf/black@stable
         with:
           options: "--check --verbose"
-          src: "./sbdprivacylib" # replace with your code path
+          src: "./privlib" # replace with your code path

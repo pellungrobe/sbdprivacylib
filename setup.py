@@ -18,7 +18,7 @@ with open(path.join(here, "requirements.txt"), encoding="utf-8") as f:
 
 
 setup(
-    name="sbdprivacylib",
+    name="privlib",
     version="0.0.1",
     license="BSD-Clause-2",
     description="Package description",
@@ -54,8 +54,8 @@ setup(
             "*.test.*",
             "test.*",
             "test",
-            "sbdprivacylib.test",
-            "sbdprivacylib.test.*",
+            "privlib.test",
+            "privlib.test.*",
         ]
     ),
 )
