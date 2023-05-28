@@ -14,30 +14,30 @@ class Attribute_type(Enum):
     # ["name","path", "module", "class"]
     # Current available attribute types:
     NUMERICAL_CONTINUOUS = ["numerical_continuous",
-                            "anonymization.src.attribute_types.numerical_continuous",
+                            "privlib.anonymization.src.attribute_types.numerical_continuous",
                             "numerical_continuous",
                             "Numerical_continuous"]
     NUMERICAL_DISCRETE = ["numerical_discrete",
-                          "anonymization.src.attribute_types.numerical_discrete",
+                          "privlib.anonymization.src.attribute_types.numerical_discrete",
                           "numerical_discrete",
                           "Numerical_discrete"]
     PLAIN_CATEGORICAL = ["plain_categorical",
-                         "anonymization.src.attribute_types.plain_categorical",
+                         "privlib.anonymization.src.attribute_types.plain_categorical",
                          "plain_categorical",
                          "Plain_categorical"]
     SEMANTIC_CATEGORICAL_WORDNET = ["semantic_categorical_wordnet",
-                                    "anonymization.src.attribute_types.semantic_categorical_wordnet",
+                                    "privlib.anonymization.src.attribute_types.semantic_categorical_wordnet",
                                     "semantic_categorical_wordnet",
                                     "Semantic_categorical_wordnet"]
     DATE = ["date",
-            "anonymization.src.attribute_types.date",
+            "privlib.anonymization.src.attribute_types.date",
             "date",
             "Date"]
     COORDINATE = ["coordinate",
-                  "anonymization.src.attribute_types.coordinate",
+                  "privlib.anonymization.src.attribute_types.coordinate",
                   "coordinate",
                   "Coordinate"]
     DATETIME = ["datetime",
-            "anonymization.src.attribute_types.datetime",
+            "privlib.anonymization.src.attribute_types.datetime",
             "datetime",
             "Datetime"]

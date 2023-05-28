@@ -6,6 +6,8 @@ from privlib.anonymization.src.algorithms.k_anonymity import K_anonymity
 from privlib.anonymization.src.utils import utils
 from privlib.anonymization.src.algorithms.anonymization_scheme import Anonymization_scheme
 
+import nltk
+nltk.download('omw-1.4')
 """
 References:
 [1] Josep Domingo-Ferrer and Vicenç Torra, "Ordinal, continuous and heterogeneous k-anonymity through microaggregation",

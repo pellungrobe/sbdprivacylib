@@ -10,6 +10,8 @@ from privlib.anonymization.src.utils import constants
 from privlib.anonymization.src.utils.sensitivity_type import Sensitivity_type
 from privlib.anonymization.src.attribute_types.attribute_type import Attribute_type
 
+import nltk
+nltk.download('omw-1.4')
 """
 (See also examples of use in section 7 of the jupyter notebook: test_anonymization.ipynb)
 """

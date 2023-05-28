@@ -135,6 +135,7 @@ class Dataset(ABC):
         """
         values = []
         for i in range(len(values_in)):
+            print(self.available_attribute_types)
             attribute = self.attributes[self.header[i]]
             path = self.available_attribute_types[attribute.attribute_type][1]
             module = self.available_attribute_types[attribute.attribute_type][2]
