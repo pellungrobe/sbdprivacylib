@@ -1,4 +1,6 @@
-from privlib.anonymization.src.algorithms.anonymization_scheme import Anonymization_scheme
+from privlib.anonymization.src.algorithms.anonymization_scheme import (
+    Anonymization_scheme,
+)
 from privlib.anonymization.src.utils.sensitivity_type import Sensitivity_type
 from privlib.anonymization.src.utils import constants
 from privlib.anonymization.src.entities.dataset import Dataset
@@ -26,6 +28,7 @@ class Differential_privacy(Anonymization_scheme):
     .. [3] Jordi Soria-Comas, Josep Domingo-Ferrer, David Sánchez and Sergio Martínez, "Enhancing data utility in differential privacy via microaggregation-based k-anonymity", The VLDB Journal, Vol. 23, no. 5, pp. 771-794, Sep 2014. DOI: https://doi.org/10.1007/s00778-014-0351-4
 
     """
+
     def __init__(self, original_dataset, k, epsilon):
         """Constructor, called from inherited classes
 
@@ -90,7 +93,9 @@ class Differential_privacy(Anonymization_scheme):
             max_value = self.original_dataset.attributes[name].max_value
             if min_value == "" or max_value == "":
                 values = [record.values[0] for record in temp]
-                min_value_margin, max_value_margin = values[0].calculate_min_max(values, constants.BORDER_MARGIN)
+                min_value_margin, max_value_margin = values[0].calculate_min_max(
+                    values, constants.BORDER_MARGIN
+                )
                 if min_value == "":
                     min_value = min_value_margin
                 if max_value == "":
@@ -99,18 +104,30 @@ class Differential_privacy(Anonymization_scheme):
 
             clusters = algorithm.create_clusters(temp, self.k)
             for cluster in clusters:
-                centroid = algorithm.calculate_centroid(cluster, epsilon=applicable_epsilon,
-                                                        k=self.k,
-                                                        min_value=min_value,
-                                                        max_value=max_value)
+                centroid = algorithm.calculate_centroid(
+                    cluster,
+                    epsilon=applicable_epsilon,
+                    k=self.k,
+                    min_value=min_value,
+                    max_value=max_value,
+                )
                 for record in cluster:
-                    self.anonymized_dataset.records[record.id].values[i] = centroid.values[0]
+                    self.anonymized_dataset.records[record.id].values[
+                        i
+                    ] = centroid.values[0]
         # this is to allow other anonymizations without re-load the dataset
         Dataset.calculate_standard_deviations(self.original_dataset.records)
         Record.set_reference_record(self.original_dataset)
         self.suppress_identifiers()
         Anonymization_scheme.runtime = timer() - t_ini
-        print(f"Anonymization runtime: {utils.format_time(Anonymization_scheme.runtime)}")
+        print(
+            f"Anonymization runtime: {utils.format_time(Anonymization_scheme.runtime)}"
+        )
 
     def __str__(self):
-        return "Differential_privacy, k = " + str(self.k) + ", epsilon = " + str(self.epsilon)
+        return (
+            "Differential_privacy, k = "
+            + str(self.k)
+            + ", epsilon = "
+            + str(self.epsilon)
+        )

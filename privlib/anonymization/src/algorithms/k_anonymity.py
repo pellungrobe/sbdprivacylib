@@ -1,4 +1,6 @@
-from privlib.anonymization.src.algorithms.anonymization_scheme import Anonymization_scheme
+from privlib.anonymization.src.algorithms.anonymization_scheme import (
+    Anonymization_scheme,
+)
 from privlib.anonymization.src.utils.sensitivity_type import Sensitivity_type
 from privlib.anonymization.src.utils import utils
 import copy
@@ -23,6 +25,7 @@ class K_anonymity(Anonymization_scheme):
     .. [1] Josep Domingo-Ferrer and Vicenç Torra, "Ordinal, continuous and heterogeneous k-anonymity through microaggregation", Data Mining and Knowledge Discovery, Vol. 11, pp. 195-212, Sep 2005. DOI: https://doi.org/10.1007/s10618-005-0007-5
 
     """
+
     def __init__(self, original_dataset, k):
         """Constructor, called from inherited classes
 
@@ -68,10 +71,14 @@ class K_anonymity(Anonymization_scheme):
                     sensitivity = attribute.sensitivity_type
                     if sensitivity != Sensitivity_type.QUASI_IDENTIFIER.value:
                         continue
-                    self.anonymized_dataset.records[record.id].values[i] = centroid.values[i]
+                    self.anonymized_dataset.records[record.id].values[
+                        i
+                    ] = centroid.values[i]
         self.suppress_identifiers()
         Anonymization_scheme.runtime = timer() - t_ini
-        print(f"Anonymization runtime: {utils.format_time(Anonymization_scheme.runtime)}")
+        print(
+            f"Anonymization runtime: {utils.format_time(Anonymization_scheme.runtime)}"
+        )
 
     def __str__(self):
         return "k-Anonymity, k = " + str(self.k)

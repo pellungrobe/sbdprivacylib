@@ -11,6 +11,7 @@ class Dataset_DataFrame(Dataset):
      in the folder "tests")
 
     """
+
     def __init__(self, dataframe, settings_path, sample=None):
         """Constructor, creates an instance of a dataset loaded from a pandas Dataframe
 

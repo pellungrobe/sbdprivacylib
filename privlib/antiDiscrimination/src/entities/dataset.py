@@ -14,6 +14,7 @@ class Dataset(ABC):
     (See also the file "anti_discrimination_test.py" in the folder "tests")
 
     """
+
     def __init__(self, name, separator, sample=None):
         """Constructor, creates an instance of a dataset
 
@@ -107,7 +108,7 @@ class Dataset(ABC):
             row = [name]
             table.append(row)
         df = pd.DataFrame(table, columns=["Name"])
-        df.style.set_caption('Attributes')
+        df.style.set_caption("Attributes")
         display(df)
         print("")
 

@@ -1,12 +1,17 @@
 from privlib.anonymization.src.entities.dataset_CSV import Dataset_CSV
 from privlib.anonymization.src.entities.dataset_DataFrame import Dataset_DataFrame
 from privlib.anonymization.src.algorithms.microaggregation import Microaggregation
-from privlib.anonymization.src.algorithms.differential_privacy import Differential_privacy
+from privlib.anonymization.src.algorithms.differential_privacy import (
+    Differential_privacy,
+)
 from privlib.anonymization.src.utils import utils
-from privlib.anonymization.src.algorithms.anonymization_scheme import Anonymization_scheme
+from privlib.anonymization.src.algorithms.anonymization_scheme import (
+    Anonymization_scheme,
+)
 
 import nltk
-nltk.download('omw-1.4')
+
+nltk.download("omw-1.4")
 """
 References:
 [1] Josep Domingo-Ferrer and Vicenç Torra, "Ordinal, continuous and heterogeneous k-anonymity through microaggregation",
@@ -55,13 +60,19 @@ algorithm = Microaggregation()
 anonymization_scheme.calculate_anonymization(algorithm)
 
 """ Calculate information loss (utility) metrics and estimate the disclosure risk """
-information_loss = Anonymization_scheme.calculate_information_loss(dataset, anonymization_scheme.anonymized_dataset)
+information_loss = Anonymization_scheme.calculate_information_loss(
+    dataset, anonymization_scheme.anonymized_dataset
+)
 information_loss.description()
-disclosure_risk = Anonymization_scheme.calculate_fast_record_linkage(dataset, anonymization_scheme.anonymized_dataset)
+disclosure_risk = Anonymization_scheme.calculate_fast_record_linkage(
+    dataset, anonymization_scheme.anonymized_dataset
+)
 disclosure_risk.description()
 
 """ Save the anonymizated data set to disk in csv format"""
-anonymization_scheme.save_anonymized_dataset("../../output_datasets/toy_all_types_anom.csv")
+anonymization_scheme.save_anonymized_dataset(
+    "../../output_datasets/toy_all_types_anom.csv"
+)
 
 """ The anonymized data set can be converted to pandas dataframe"""
 df_anonymized = anonymization_scheme.anonymized_dataset_to_dataframe()

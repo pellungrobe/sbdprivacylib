@@ -12,8 +12,16 @@ class Information_loss_result:
     (See also the files "test_k_anonymity.py", "test_k_t_closeness.py" and "test_differential_privacy.py"
      in the folder "tests")
     """
-    def __init__(self, SSE, attribute_name, original_mean, anonymized_mean,
-                 original_variance, anonymized_variance):
+
+    def __init__(
+        self,
+        SSE,
+        attribute_name,
+        original_mean,
+        anonymized_mean,
+        original_variance,
+        anonymized_variance,
+    ):
         """Constructor, creates an instance of a information loss result
 
         Parameters
@@ -48,23 +56,56 @@ class Information_loss_result:
         print(f"SSE: {self.SSE:.3f}")
         table = []
         for i in range(len(self.original_mean)):
-            row = [self.attribute_name[i], self.original_mean[i], self.anonymized_mean[i],
-                   self.original_variance[i], self.anonymized_variance[i]]
+            row = [
+                self.attribute_name[i],
+                self.original_mean[i],
+                self.anonymized_mean[i],
+                self.original_variance[i],
+                self.anonymized_variance[i],
+            ]
             table.append(row)
-        df = pd.DataFrame(table, columns=["Name", "Original mean", "Anonymized mean",
-                                          "Original variance", "Anonymized variance"])
+        df = pd.DataFrame(
+            table,
+            columns=[
+                "Name",
+                "Original mean",
+                "Anonymized mean",
+                "Original variance",
+                "Anonymized variance",
+            ],
+        )
         display(df)
 
     def __str__(self):
         s = "SSE: " + str(self.SSE) + "\n"
         for i in range(len(self.original_mean)):
-            s += "Attribute: " + self.attribute_name[i] + " Original data set mean: " + str(
-                self.original_mean[i]) + "\n"
-            s += "Attribute: " + self.attribute_name[i] + " Anonymized data set mean: " + str(
-                self.anonymized_mean[i]) + "\n"
-            s += "Attribute: " + self.attribute_name[i] + " Original data set variance: " + str(
-                self.original_variance[i]) + "\n"
-            s += "Attribute: " + self.attribute_name[i] + " Anonymized data set variance: " + str(
-                self.anonymized_variance[i]) + "\n"
+            s += (
+                "Attribute: "
+                + self.attribute_name[i]
+                + " Original data set mean: "
+                + str(self.original_mean[i])
+                + "\n"
+            )
+            s += (
+                "Attribute: "
+                + self.attribute_name[i]
+                + " Anonymized data set mean: "
+                + str(self.anonymized_mean[i])
+                + "\n"
+            )
+            s += (
+                "Attribute: "
+                + self.attribute_name[i]
+                + " Original data set variance: "
+                + str(self.original_variance[i])
+                + "\n"
+            )
+            s += (
+                "Attribute: "
+                + self.attribute_name[i]
+                + " Anonymized data set variance: "
+                + str(self.anonymized_variance[i])
+                + "\n"
+            )
 
         return s

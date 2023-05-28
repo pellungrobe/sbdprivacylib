@@ -26,6 +26,7 @@ class Microaggregation(Algorithm):
     .. [2] J.Soria-Comas, J.Domingo-Ferrer, D.Sánchez and S.Martínez, "t-Closeness through microaggregation: strict privacy with enhanced utility preservation", IEEE Transactions on Knowledge and Data Engineering, Vol. 27, no. 11, pp. 3098-3110, Oct 2015. DOI: https://doi.org/10.1109/TKDE.2015.2435777
 
     """
+
     @staticmethod
     def create_clusters(records, k):
         """create_clusters

@@ -11,13 +11,14 @@ class Semantic_categorical_wordnet(Value):
     Class that implements the necessary methods to deal with attribute type Semantic categorical in wordnet
 
     """
+
     reference_value = None
     sims_wp = {}
     try:
-        nltk.find('corpora/wordnet')
+        nltk.find("corpora/wordnet")
     except LookupError:
         print("Downloading wordnet (only the first time)")
-        nltk.download('wordnet')
+        nltk.download("wordnet")
 
     def __init__(self, value):
         """Constructor, called from inherited classes
@@ -32,7 +33,7 @@ class Semantic_categorical_wordnet(Value):
         --------
         :class:`Value`
         """
-        syns = wordnet.synsets(value, pos='n')
+        syns = wordnet.synsets(value, pos="n")
         if len(syns) == 0:
             raise TypeError(f"Value not found in Wordnet : {value}")
         self.value = value
@@ -90,8 +91,8 @@ class Semantic_categorical_wordnet(Value):
             if key in Semantic_categorical_wordnet.sims_wp:
                 return Semantic_categorical_wordnet.sims_wp[key]
 
-        syns1 = wordnet.synsets(word1, pos='n')
-        syns2 = wordnet.synsets(word2, pos='n')
+        syns1 = wordnet.synsets(word1, pos="n")
+        syns2 = wordnet.synsets(word2, pos="n")
         max_sim = 0
         for syn1 in syns1:
             for syn2 in syns2:
@@ -122,7 +123,7 @@ class Semantic_categorical_wordnet(Value):
         float
             The similarity between the two semantic categorical values.
         """
-        syns_word = wordnet.synsets(word, pos='n')
+        syns_word = wordnet.synsets(word, pos="n")
         max_sim = 0
         for syn_word in syns_word:
             sim = syn_word.wup_similarity(syn)
@@ -180,12 +181,14 @@ class Semantic_categorical_wordnet(Value):
             The value that is the centroid of the list of semantic categorical values.
         """
         if constants.EPSILON in kwargs.keys():
-            centroid = Semantic_categorical_wordnet.calculate_dp_centroid(values, **kwargs)
+            centroid = Semantic_categorical_wordnet.calculate_dp_centroid(
+                values, **kwargs
+            )
             return centroid
         # centroid that maximizes similarity
         candidates = set()
         for value in values:
-            for syn in wordnet.synsets(value.value, pos='n'):
+            for syn in wordnet.synsets(value.value, pos="n"):
                 for parents in syn.hypernym_paths():
                     for parent in parents:
                         candidates.add(parent)
@@ -295,7 +298,9 @@ class Semantic_categorical_wordnet(Value):
         mean = Semantic_categorical_wordnet.calculate_mean(values)
         variance = 0
         for value in values:
-            partial = Semantic_categorical_wordnet.similarity_wp_word_syn(value.value, mean.syn)
+            partial = Semantic_categorical_wordnet.similarity_wp_word_syn(
+                value.value, mean.syn
+            )
             partial = partial * partial
             variance += partial
         variance /= len(values)
@@ -338,8 +343,10 @@ class Semantic_categorical_wordnet(Value):
         Semantic_categorical_wordnet
             The semantic categorical reference value.
         """
-        Semantic_categorical_wordnet.reference_value = Semantic_categorical_wordnet('entity')
-        Semantic_categorical_wordnet.reference_value.syn = wordnet.synsets('entity')[0]
+        Semantic_categorical_wordnet.reference_value = Semantic_categorical_wordnet(
+            "entity"
+        )
+        Semantic_categorical_wordnet.reference_value.syn = wordnet.synsets("entity")[0]
 
         return Semantic_categorical_wordnet.reference_value
 
@@ -347,8 +354,9 @@ class Semantic_categorical_wordnet(Value):
         return self.value == other.value
 
     def __lt__(self, other):
-        return self.distance(Semantic_categorical_wordnet.reference_value) < \
-               other.distance(Semantic_categorical_wordnet.reference_value)
+        return self.distance(
+            Semantic_categorical_wordnet.reference_value
+        ) < other.distance(Semantic_categorical_wordnet.reference_value)
 
     def __str__(self):
         return str(self.value)

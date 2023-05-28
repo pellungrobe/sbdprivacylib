@@ -1,4 +1,6 @@
-from privlib.anonymization.src.algorithms.anonymization_scheme import Anonymization_scheme
+from privlib.anonymization.src.algorithms.anonymization_scheme import (
+    Anonymization_scheme,
+)
 from privlib.anonymization.src.utils.sensitivity_type import Sensitivity_type
 from privlib.anonymization.src.utils import utils
 import copy
@@ -23,6 +25,7 @@ class T_closeness(Anonymization_scheme):
     .. [2] Jordi Soria-Comas, Josep Domingo-Ferrer, David Sánchez and Sergio Martínez, "t-Closeness through microaggregation: strict privacy with enhanced utility preservation", IEEE Transactions on Knowledge and Data Engineering, Vol. 27, no. 11, pp. 3098-3110, Oct 2015. DOI: https://doi.org/10.1109/TKDE.2015.2435777
 
     """
+
     def __init__(self, original_dataset, k, t):
         """Constructor, called from inherited classes
 
@@ -73,15 +76,22 @@ class T_closeness(Anonymization_scheme):
                     sensitivity = attribute.sensitivity_type
                     if sensitivity != Sensitivity_type.QUASI_IDENTIFIER.value:
                         continue
-                    self.anonymized_dataset.records[record.id].values[i] = centroid.values[i]
+                    self.anonymized_dataset.records[record.id].values[
+                        i
+                    ] = centroid.values[i]
         self.suppress_identifiers()
         Anonymization_scheme.runtime = timer() - t_ini
-        print(f"Anonymization runtime: {utils.format_time(Anonymization_scheme.runtime)}")
+        print(
+            f"Anonymization runtime: {utils.format_time(Anonymization_scheme.runtime)}"
+        )
 
     def create_k_t_clusters(self):
         self.anonymized_dataset = copy.deepcopy(self.original_dataset)
         index_confidential = self.get_index_confidential_attribute()
-        print("Sorting by confidential attribute: " + self.original_dataset.header[index_confidential])
+        print(
+            "Sorting by confidential attribute: "
+            + self.original_dataset.header[index_confidential]
+        )
         conf_attr_values = []
         for record in self.anonymized_dataset.records:
             value = record.values[index_confidential]

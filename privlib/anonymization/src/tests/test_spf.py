@@ -2,16 +2,21 @@ from privlib.anonymization.src.entities.dataset_SPF import Dataset_SPF
 from privlib.anonymization.src.algorithms.mdav import Mdav
 from privlib.anonymization.src.algorithms.microaggregation import Microaggregation
 from privlib.anonymization.src.algorithms.k_anonymity import K_anonymity
-from privlib.anonymization.src.algorithms.differential_privacy import Differential_privacy
+from privlib.anonymization.src.algorithms.differential_privacy import (
+    Differential_privacy,
+)
 from privlib.anonymization.src.algorithms.t_closeness import T_closeness
-from privlib.anonymization.src.algorithms.anonymization_scheme import Anonymization_scheme
+from privlib.anonymization.src.algorithms.anonymization_scheme import (
+    Anonymization_scheme,
+)
 from privlib.riskAssessment.sequentialprivacyframe import SequentialPrivacyFrame
 from privlib.anonymization.src.utils import constants
 from privlib.anonymization.src.utils.sensitivity_type import Sensitivity_type
 from privlib.anonymization.src.attribute_types.attribute_type import Attribute_type
 
 import nltk
-nltk.download('omw-1.4')
+
+nltk.download("omw-1.4")
 """
 (See also examples of use in section 7 of the jupyter notebook: test_anonymization.ipynb)
 """
@@ -30,19 +35,33 @@ path_csv = "../../input_datasets/ToyDataset.txt"
 # path_settings = "../../input_datasets/metadata_ToyDataset.xml"
 
 """Sequential Privacy Frame data is created from the csv dataset"""
-spf = SequentialPrivacyFrame.from_file(path_csv, elements=["lat", "lng"], sequence_id="seq")
+spf = SequentialPrivacyFrame.from_file(
+    path_csv, elements=["lat", "lng"], sequence_id="seq"
+)
 
 """The metadata describing the attributes can be hardcoded (instead of read from xml)"""
-settings = {"elements": {constants.SENSITIVITY_TYPE: Sensitivity_type.QUASI_IDENTIFIER.value,
-                         constants.ATTRIBUTE_TYPE: Attribute_type.COORDINATE.value},
-            "datetime": {constants.SENSITIVITY_TYPE: Sensitivity_type.QUASI_IDENTIFIER.value,
-                         constants.ATTRIBUTE_TYPE: Attribute_type.DATETIME.value},
-            "uid":      {constants.SENSITIVITY_TYPE: Sensitivity_type.IDENTIFIER.value,
-                         constants.ATTRIBUTE_TYPE: Attribute_type.NUMERICAL_DISCRETE.value},
-            "sequence": {constants.SENSITIVITY_TYPE: Sensitivity_type.IDENTIFIER.value,
-                         constants.ATTRIBUTE_TYPE: Attribute_type.NUMERICAL_DISCRETE.value},
-            "order":    {constants.SENSITIVITY_TYPE: Sensitivity_type.IDENTIFIER.value,
-                         constants.ATTRIBUTE_TYPE: Attribute_type.NUMERICAL_DISCRETE.value}}
+settings = {
+    "elements": {
+        constants.SENSITIVITY_TYPE: Sensitivity_type.QUASI_IDENTIFIER.value,
+        constants.ATTRIBUTE_TYPE: Attribute_type.COORDINATE.value,
+    },
+    "datetime": {
+        constants.SENSITIVITY_TYPE: Sensitivity_type.QUASI_IDENTIFIER.value,
+        constants.ATTRIBUTE_TYPE: Attribute_type.DATETIME.value,
+    },
+    "uid": {
+        constants.SENSITIVITY_TYPE: Sensitivity_type.IDENTIFIER.value,
+        constants.ATTRIBUTE_TYPE: Attribute_type.NUMERICAL_DISCRETE.value,
+    },
+    "sequence": {
+        constants.SENSITIVITY_TYPE: Sensitivity_type.IDENTIFIER.value,
+        constants.ATTRIBUTE_TYPE: Attribute_type.NUMERICAL_DISCRETE.value,
+    },
+    "order": {
+        constants.SENSITIVITY_TYPE: Sensitivity_type.IDENTIFIER.value,
+        constants.ATTRIBUTE_TYPE: Attribute_type.NUMERICAL_DISCRETE.value,
+    },
+}
 
 """The attribute Dataframe.attrs has persistence and it is a good way to embed metadata into the dataframe"""
 spf.attrs["attrs_settings"] = settings
@@ -66,12 +85,15 @@ algorithm = Mdav()
 anonymization_scheme.calculate_anonymization(algorithm)
 
 """ Calculate information loss (utility) metrics and estimate the disclosure risk """
-information_loss = Anonymization_scheme.calculate_information_loss(dataset, anonymization_scheme.anonymized_dataset)
+information_loss = Anonymization_scheme.calculate_information_loss(
+    dataset, anonymization_scheme.anonymized_dataset
+)
 information_loss.description()
 # disclosure_risk = Anonymization_scheme.calculate_record_linkage(dataset, anonymization_scheme.anonymized_dataset)
 # disclosure_risk.description()
-disclosure_risk = Anonymization_scheme.calculate_fast_record_linkage(dataset,
-                                                                     anonymization_scheme.anonymized_dataset)
+disclosure_risk = Anonymization_scheme.calculate_fast_record_linkage(
+    dataset, anonymization_scheme.anonymized_dataset
+)
 disclosure_risk.description()
 
 """The anonymized dataset can be reverted to sequential privacy frame format"""

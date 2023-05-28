@@ -9,6 +9,7 @@ class Value(ABC):
     according the characteristics of the value.
 
     """
+
     @abstractmethod
     def distance(self, value):
         """distance

@@ -1,10 +1,15 @@
-from privlib.antiDiscrimination.src.algorithms.anonymization_scheme import Anonymization_scheme
+from privlib.antiDiscrimination.src.algorithms.anonymization_scheme import (
+    Anonymization_scheme,
+)
+
 # from apyori import apriori
 import itertools
 from tqdm.auto import tqdm
 import pickle
 import copy
-from privlib.antiDiscrimination.src.entities.anti_discrimination_metrics import Anti_discrimination_metrics
+from privlib.antiDiscrimination.src.entities.anti_discrimination_metrics import (
+    Anti_discrimination_metrics,
+)
 
 
 class Anti_discrimination(Anonymization_scheme):
@@ -26,6 +31,7 @@ class Anti_discrimination(Anonymization_scheme):
            data mining", IEEE Transactions on Knowledge and Data Engineering, Vol. 25, no. 7, pp. 1445-1459, Jun 2013.
            DOI: https://doi.org/10.1109/TKDE.2012.72
     """
+
     hash_num_rec = {}
 
     def __init__(self, original_dataset, min_support, min_confidence, alfa, DI):
@@ -72,9 +78,15 @@ class Anti_discrimination(Anonymization_scheme):
         """
         print("Anonymizing " + str(self))
         print("Alfa = " + str(self.alfa))
-        self.FR_rules, PD_rules, PND_rules = self.create_rules(self.original_dataset, self.index_class)
-        self.RR_rules, self.non_RR_rules = self.calculate_RR_rules(self.original_dataset, PND_rules)
-        self.MR_rules, self.PR_rules = self.calculate_MR_rules(self.original_dataset, PD_rules)
+        self.FR_rules, PD_rules, PND_rules = self.create_rules(
+            self.original_dataset, self.index_class
+        )
+        self.RR_rules, self.non_RR_rules = self.calculate_RR_rules(
+            self.original_dataset, PND_rules
+        )
+        self.MR_rules, self.PR_rules = self.calculate_MR_rules(
+            self.original_dataset, PD_rules
+        )
         self.anonymized_dataset = copy.deepcopy(self.original_dataset)
         self.anonymize_direct_indirect()
 
@@ -97,23 +109,34 @@ class Anti_discrimination(Anonymization_scheme):
     def calculate_and_save_rules_direct(self):
         self.calculate_and_save_FR_rules()
         self.FR_rules, PD_rules, PND_rules = self.load_rules_FR()
-        self.MR_rules, self.PR_rules = self.calculate_MR_rules(self.original_dataset, PD_rules)
+        self.MR_rules, self.PR_rules = self.calculate_MR_rules(
+            self.original_dataset, PD_rules
+        )
         self.save_rules_direct(self.MR_rules, self.PR_rules)
 
     def calculate_and_save_rules_indirect(self):
         self.calculate_and_save_FR_rules()
         self.FR_rules, PD_rules, PND_rules = self.load_rules_FR()
-        self.RR_rules, self.non_RR_rules = self.calculate_RR_rules(self.original_dataset, PND_rules)
+        self.RR_rules, self.non_RR_rules = self.calculate_RR_rules(
+            self.original_dataset, PND_rules
+        )
         self.save_rules_indirect(self.RR_rules, self.non_RR_rules)
 
     def calculate_and_save_FR_rules(self):
-        self.FR_rules, PD_rules, PND_rules = self.create_rules(self.original_dataset, self.index_class)
+        self.FR_rules, PD_rules, PND_rules = self.create_rules(
+            self.original_dataset, self.index_class
+        )
         self.save_rules_FR(self.FR_rules, PD_rules, PND_rules)
 
     def anonymize_indirect_rules(self):
         records = []
         for record in self.anonymized_dataset.records:
-            records.append([str(record.values[i]) for i in range(0, self.anonymized_dataset.num_attr)])
+            records.append(
+                [
+                    str(record.values[i])
+                    for i in range(0, self.anonymized_dataset.num_attr)
+                ]
+            )
         total_records = len(records)
         print("Anonymizing...")
         for RR_rule in tqdm(self.RR_rules):
@@ -161,7 +184,9 @@ class Anti_discrimination(Anonymization_scheme):
                     if len(DBc_impact) > 0:
                         first_dbc = DBc_impact.pop(0)
                         records[first_dbc[0]][self.index_class] = C[0].item
-                        self.anonymized_dataset.records[first_dbc[0]].values[self.index_class] = C[0].item
+                        self.anonymized_dataset.records[first_dbc[0]].values[
+                            self.index_class
+                        ] = C[0].item
                         num_rule = self.count_items_no_hash(records, BC)
                         support_BC = num_rule / total_records
                         confidence_BC = support_BC / support_B
@@ -172,7 +197,12 @@ class Anti_discrimination(Anonymization_scheme):
     def anonymize_direct_rules(self):
         records = []
         for record in self.anonymized_dataset.records:
-            records.append([str(record.values[i]) for i in range(0, self.anonymized_dataset.num_attr)])
+            records.append(
+                [
+                    str(record.values[i])
+                    for i in range(0, self.anonymized_dataset.num_attr)
+                ]
+            )
         total_records = len(records)
         print("Anonymizing...")
         for ABC_rule in tqdm(self.MR_rules):
@@ -199,7 +229,9 @@ class Anti_discrimination(Anonymization_scheme):
             while delta <= cond:
                 first_dbc = DBc_impact.pop(0)
                 records[first_dbc[0]][self.index_class] = C[0].item
-                self.anonymized_dataset.records[first_dbc[0]].values[self.index_class] = C[0].item
+                self.anonymized_dataset.records[first_dbc[0]].values[
+                    self.index_class
+                ] = C[0].item
                 num_rule = self.count_items_no_hash(records, BC)
                 support_BC = num_rule / total_records
                 confidence_BC = support_BC / support_B
@@ -209,7 +241,12 @@ class Anti_discrimination(Anonymization_scheme):
         print("Anonymizing " + str(self))
         records = []
         for record in self.anonymized_dataset.records:
-            records.append([str(record.values[i]) for i in range(0, self.anonymized_dataset.num_attr)])
+            records.append(
+                [
+                    str(record.values[i])
+                    for i in range(0, self.anonymized_dataset.num_attr)
+                ]
+            )
         total_records = len(records)
         record_impact = []
         print("Calculating impacts...")
@@ -259,12 +296,15 @@ class Anti_discrimination(Anonymization_scheme):
                 DBc_impact.sort(key=lambda x: x[1])
                 if ABC_rule in self.MR_rules:
                     # if self.is_rule_in_rule_set(ABC_rule, MR_rules):
-                    while delta <= (beta1 * (beta2 + gamma - 1)) / (beta2 * self.alfa) and \
-                            delta <= (confidence_ABC / self.alfa):
+                    while delta <= (beta1 * (beta2 + gamma - 1)) / (
+                        beta2 * self.alfa
+                    ) and delta <= (confidence_ABC / self.alfa):
                         if len(DBc_impact) > 0:
                             first_dbc = DBc_impact.pop(0)
                             records[first_dbc[0]][self.index_class] = C[0].item
-                            self.anonymized_dataset.records[first_dbc[0]].values[self.index_class] = C[0].item
+                            self.anonymized_dataset.records[first_dbc[0]].values[
+                                self.index_class
+                            ] = C[0].item
                             num_rule = self.count_items_no_hash(records, BC)
                             support_BC = num_rule / total_records
                             confidence_BC = support_BC / support_B
@@ -276,7 +316,9 @@ class Anti_discrimination(Anonymization_scheme):
                         if len(DBc_impact) > 0:
                             first_dbc = DBc_impact.pop(0)
                             records[first_dbc[0]][self.index_class] = C[0].item
-                            self.anonymized_dataset.records[first_dbc[0]].values[self.index_class] = C[0].item
+                            self.anonymized_dataset.records[first_dbc[0]].values[
+                                self.index_class
+                            ] = C[0].item
                             num_rule = self.count_items_no_hash(records, BC)
                             support_BC = num_rule / total_records
                             confidence_BC = support_BC / support_B
@@ -321,7 +363,9 @@ class Anti_discrimination(Anonymization_scheme):
                 if len(DBc_impact) > 0:
                     first_dbc = DBc_impact.pop(0)
                     records[first_dbc[0]][self.index_class] = C[0].item
-                    self.anonymized_dataset.records[first_dbc[0]].values[self.index_class] = C[0].item
+                    self.anonymized_dataset.records[first_dbc[0]].values[
+                        self.index_class
+                    ] = C[0].item
                     num_rule = self.count_items_no_hash(records, BC)
                     support_BC = num_rule / total_records
                     confidence_BC = support_BC / support_B
@@ -376,10 +420,16 @@ class Anti_discrimination(Anonymization_scheme):
         print("Calculating metrics on anonymized dataset...")
         # todo: now, last attribute is the class, change to read the class from settings (it has to be the last one)
         index_class = self.anonymized_dataset.num_attr - 1
-        FR_rules_a, PD_rules_a, PND_rules_a = self.create_rules(self.anonymized_dataset, index_class)
-        RR_rules_a, non_RR_rules_a = self.calculate_RR_rules(self.anonymized_dataset, PND_rules_a)
+        FR_rules_a, PD_rules_a, PND_rules_a = self.create_rules(
+            self.anonymized_dataset, index_class
+        )
+        RR_rules_a, non_RR_rules_a = self.calculate_RR_rules(
+            self.anonymized_dataset, PND_rules_a
+        )
         RR_rules_a = [rule for rule in RR_rules_a if rule in self.RR_rules]
-        MR_rules_a, PR_rules_a = self.calculate_MR_rules(self.anonymized_dataset, PD_rules_a)
+        MR_rules_a, PR_rules_a = self.calculate_MR_rules(
+            self.anonymized_dataset, PD_rules_a
+        )
         MR_rules_a = [rule for rule in MR_rules_a if rule in self.MR_rules]
 
         if len(self.RR_rules) > 0:
@@ -395,7 +445,9 @@ class Anti_discrimination(Anonymization_scheme):
         intersection = [rule for rule in self.PR_rules if rule in PR_rules_a]
         DDPP = len(intersection) / len(self.PR_rules)
 
-        anti_discrimination_metrics = Anti_discrimination_metrics(DDPD, DDPP, IDPD, IDPP)
+        anti_discrimination_metrics = Anti_discrimination_metrics(
+            DDPD, DDPP, IDPD, IDPP
+        )
 
         return anti_discrimination_metrics
 
@@ -403,7 +455,12 @@ class Anti_discrimination(Anonymization_scheme):
         print("Calculating MR and PR rules...")
         records = []
         for record in dataset.records:
-            records.append([str(record.values[i]) for i in range(0, self.original_dataset.num_attr)])
+            records.append(
+                [
+                    str(record.values[i])
+                    for i in range(0, self.original_dataset.num_attr)
+                ]
+            )
         total_records = len(records)
         MR_rules = []
         PR_rules = []
@@ -438,7 +495,12 @@ class Anti_discrimination(Anonymization_scheme):
         print("Calculating RR and non_RR rules...")
         records = []
         for record in dataset.records:
-            records.append([str(record.values[i]) for i in range(0, self.original_dataset.num_attr)])
+            records.append(
+                [
+                    str(record.values[i])
+                    for i in range(0, self.original_dataset.num_attr)
+                ]
+            )
         total_records = len(records)
         RR_rules = []
         non_RR_rules = []
@@ -446,7 +508,9 @@ class Anti_discrimination(Anonymization_scheme):
             ABC_rules = []
             is_PND_rule_RR = False
             for num_items_premise in range(1, len(PND_rule.premise) + 1):
-                for permutation_premise in itertools.permutations(PND_rule.premise, num_items_premise):
+                for permutation_premise in itertools.permutations(
+                    PND_rule.premise, num_items_premise
+                ):
                     D = []
                     B = PND_rule.premise[:]
                     C = PND_rule.consequence
@@ -487,7 +551,7 @@ class Anti_discrimination(Anonymization_scheme):
                                 continue
                             elb = self.elb(gamma, delta, beta1, beta2)
                             if elb >= self.alfa:
-                            # if elb >= 1.0:
+                                # if elb >= 1.0:
                                 is_PND_rule_RR = True
                                 ABC_rule = Rule(A + B, C, None, None)
                                 ABC_rule.A = A[:]
@@ -676,21 +740,21 @@ class Anti_discrimination(Anonymization_scheme):
 
     @staticmethod
     def save_rules_direct(MR_rules, PR_rules):
-        with open("../../input_datasets/rules_MR_PR.dat", 'wb') as fp:
+        with open("../../input_datasets/rules_MR_PR.dat", "wb") as fp:
             pickle.dump(MR_rules, fp)
             pickle.dump(PR_rules, fp)
             pickle.dump(Anti_discrimination.hash_num_rec, fp)
 
     @staticmethod
     def save_rules_indirect(RR_rules, non_RR_rules):
-        with open("../../input_datasets/rules_RR_nonRR.dat", 'wb') as fp:
+        with open("../../input_datasets/rules_RR_nonRR.dat", "wb") as fp:
             pickle.dump(RR_rules, fp)
             pickle.dump(non_RR_rules, fp)
             pickle.dump(Anti_discrimination.hash_num_rec, fp)
 
     @staticmethod
     def load_rules_direct():
-        with open("../../input_datasets/rules_MR_PR.dat", 'rb') as fp:
+        with open("../../input_datasets/rules_MR_PR.dat", "rb") as fp:
             MR_rules = pickle.load(fp)
             PR_rules = pickle.load(fp)
             Anti_discrimination.hash_num_rec = pickle.load(fp)
@@ -701,7 +765,7 @@ class Anti_discrimination(Anonymization_scheme):
 
     @staticmethod
     def load_rules_indirect():
-        with open("../../input_datasets/rules_RR_nonRR.dat", 'rb') as fp:
+        with open("../../input_datasets/rules_RR_nonRR.dat", "rb") as fp:
             RR_rules = pickle.load(fp)
             non_RR_rules = pickle.load(fp)
             Anti_discrimination.hash_num_rec = pickle.load(fp)
@@ -712,7 +776,7 @@ class Anti_discrimination(Anonymization_scheme):
 
     @staticmethod
     def save_rules_FR(FR_rules, PD_rules, PND_rules):
-        with open("../../input_datasets/rules_FR_PD_PND.dat", 'wb') as fp:
+        with open("../../input_datasets/rules_FR_PD_PND.dat", "wb") as fp:
             pickle.dump(FR_rules, fp)
             pickle.dump(PD_rules, fp)
             pickle.dump(PND_rules, fp)
@@ -720,7 +784,7 @@ class Anti_discrimination(Anonymization_scheme):
 
     @staticmethod
     def load_rules_FR():
-        with open("../../input_datasets/rules_FR_PD_PND.dat", 'rb') as fp:
+        with open("../../input_datasets/rules_FR_PD_PND.dat", "rb") as fp:
             FR_rules = pickle.load(fp)
             PD_rules = pickle.load(fp)
             PND_rules = pickle.load(fp)

@@ -6,6 +6,7 @@ class Sensitivity_type(Enum):
 
     Enumeration which relates the available sensitivity types
     """
+
     IDENTIFIER = "identifier"
     QUASI_IDENTIFIER = "quasi_identifier"
     CONFIDENTIAL = "confidential"

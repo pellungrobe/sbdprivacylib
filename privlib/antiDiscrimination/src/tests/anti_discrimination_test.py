@@ -1,4 +1,6 @@
-from privlib.antiDiscrimination.src.algorithms.anti_discrimination import Anti_discrimination
+from privlib.antiDiscrimination.src.algorithms.anti_discrimination import (
+    Anti_discrimination,
+)
 from privlib.antiDiscrimination.src.entities.dataset_DataFrame import Dataset_DataFrame
 from privlib.antiDiscrimination.src.utils import utils
 
@@ -37,8 +39,10 @@ min_support = 0.02
 min_confidence = 0.1
 # alfa = 1.20
 alfa = 1.0
-DI = [("age","young"), ("sex","female")]
-anonymization_scheme = Anti_discrimination(dataset, min_support, min_confidence, alfa, DI)
+DI = [("age", "young"), ("sex", "female")]
+anonymization_scheme = Anti_discrimination(
+    dataset, min_support, min_confidence, alfa, DI
+)
 
 """ Launch the direct and indirect anti discrimination process """
 anonymization_scheme.calculate_anonymization()
@@ -49,7 +53,9 @@ anti_discrimination_metrics = anonymization_scheme.calculate_metrics()
 anti_discrimination_metrics.description()
 
 """ Save the anonymizated data set to disk in csv format"""
-anonymization_scheme.save_anonymized_dataset("../../output_datasets/adult_anti_discrimination_anom.csv")
+anonymization_scheme.save_anonymized_dataset(
+    "../../output_datasets/adult_anti_discrimination_anom.csv"
+)
 
 """ The anonymized data set can be converted to pandas dataframe"""
 df_anonymized = anonymization_scheme.anonymized_dataset_to_dataframe()

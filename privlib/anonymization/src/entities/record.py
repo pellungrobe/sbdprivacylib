@@ -8,6 +8,7 @@ class Record:
     Class that represents a record. A record consist of a list of values.
     A :class:`Dataset` is formed by a list of records
     """
+
     header = []
     attributes = {}
     standard_deviations = []
@@ -104,8 +105,10 @@ class Record:
         for i in range(dataset.num_attr):
             name = dataset.header[i]
             sensitivity_type = dataset.attributes[name].sensitivity_type
-            if sensitivity_type == Sensitivity_type.QUASI_IDENTIFIER.value or \
-               sensitivity_type == Sensitivity_type.IDENTIFIER.value:
+            if (
+                sensitivity_type == Sensitivity_type.QUASI_IDENTIFIER.value
+                or sensitivity_type == Sensitivity_type.IDENTIFIER.value
+            ):
                 values = []
                 for j in range(len(dataset)):
                     values.append(dataset.records[j].values[i])
@@ -127,7 +130,9 @@ class Record:
 
         """
         for record in records:
-            record.distance_to_reference_record = record.distance(Record.reference_record)
+            record.distance_to_reference_record = record.distance(
+                Record.reference_record
+            )
 
     def __copy__(self):
         return Record(0, self.values)
@@ -152,6 +157,6 @@ class Record:
         for value in self.values:
             s += str(value)
             s += ","
-        s = s[:len(s) - 1]
+        s = s[: len(s) - 1]
 
         return s

@@ -5,6 +5,7 @@ class Anti_discrimination_metrics:
     (See examples of use in sections 1 and 2 of the jupyter notebook: test_antiDiscrimination.ipynb)
     (See also the file "anti_discrimination_test.py" in the folder "tests")
     """
+
     def __init__(self, DDPD, DDPP, IDPD, IDPP):
         """Constructor, creates an instance of an anti-discrimination metrics result
 
@@ -29,8 +30,7 @@ class Anti_discrimination_metrics:
         self.IDPP = IDPP
 
     def description(self):
-        """Shows the results description of the anti discrimination metrics calculation
-        """
+        """Shows the results description of the anti discrimination metrics calculation"""
         print(f"DDPD: {self.DDPD:.2f}")
         print(f"DDPP: {self.DDPP:.2f}")
         print(f"IDPD: {self.IDPD:.2f}")
@@ -43,6 +43,3 @@ class Anti_discrimination_metrics:
         s += "IDPP: " + round(self.IDPP, 2) + "\n"
 
         return s
-
-
-

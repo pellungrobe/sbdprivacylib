@@ -10,6 +10,7 @@ class Numerical_discrete(Value):
     Class that implements the necessary methods to deal with attribute type numerical discrete values
 
     """
+
     def __init__(self, value):
         """Constructor, called from inherited classes
         Creates an instance of the attribute type for numerical discrete values
@@ -214,7 +215,7 @@ class Numerical_discrete(Value):
         mini = min(values)
         maxi = max(values)
         maxi_margin = maxi * margin
-        mini -= (maxi_margin - maxi)
+        mini -= maxi_margin - maxi
         maxi = maxi_margin
 
         return mini, maxi

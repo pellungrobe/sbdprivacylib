@@ -23,6 +23,7 @@ class Mdav(Algorithm):
     .. [1] Josep Domingo-Ferrer and Vicenç Torra, "Ordinal, continuous and heterogeneous k-anonymity through microaggregation", Data Mining and Knowledge Discovery, Vol. 11, pp. 195-212, Sep 2005. DOI: https://doi.org/10.1007/s10618-005-0007-5
 
     """
+
     @staticmethod
     def create_clusters(records, k):
         """create_clusters
@@ -96,8 +97,8 @@ class Mdav(Algorithm):
         distances = [Mdav.distance(v, record) for v in records]
         records = records[np.argpartition(distances, k - 1)]
         c = [record]
-        c.extend(records[:k - 1])
-        records = records[k - 1:]
+        c.extend(records[: k - 1])
+        records = records[k - 1 :]
         return records, c
 
     def __str__(self):

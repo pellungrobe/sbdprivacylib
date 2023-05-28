@@ -10,6 +10,7 @@ class Coordinate(Value):
     Class that implements the necessary methods to deal with attribute type coordinate values
 
     """
+
     reference_value = None
 
     def __init__(self, value):
@@ -57,8 +58,10 @@ class Coordinate(Value):
         --------
         :class:`Value`
         """
-        dist = math.sqrt((value.coordinate_lat - self.coordinate_lat) ** 2 +
-                         (value.coordinate_lon - self.coordinate_lon) ** 2)
+        dist = math.sqrt(
+            (value.coordinate_lat - self.coordinate_lat) ** 2
+            + (value.coordinate_lon - self.coordinate_lon) ** 2
+        )
         return dist
 
     @staticmethod
@@ -115,11 +118,15 @@ class Coordinate(Value):
         max_value = float(kwargs[constants.MAX_VALUE].coordinate_lat)
         min_value = float(kwargs[constants.MIN_VALUE].coordinate_lat)
         scale = (max_value - min_value) / (k * epsilon)
-        dp_centroid_lat = utils.add_laplace_noise(mean.coordinate_lat, scale, max_value, min_value)
+        dp_centroid_lat = utils.add_laplace_noise(
+            mean.coordinate_lat, scale, max_value, min_value
+        )
         max_value = float(kwargs[constants.MAX_VALUE].coordinate_lon)
         min_value = float(kwargs[constants.MIN_VALUE].coordinate_lon)
         scale = (max_value - min_value) / (k * epsilon)
-        dp_centroid_lon = utils.add_laplace_noise(mean.coordinate_lon, scale, max_value, min_value)
+        dp_centroid_lon = utils.add_laplace_noise(
+            mean.coordinate_lon, scale, max_value, min_value
+        )
         dp_centroid = Coordinate([dp_centroid_lat, dp_centroid_lon])
 
         return dp_centroid
@@ -137,7 +144,9 @@ class Coordinate(Value):
             The list of coordinates to calculate its centroid
         """
         for value in values:
-            value.distance_to_reference_value = value.distance(Coordinate.reference_value)
+            value.distance_to_reference_value = value.distance(
+                Coordinate.reference_value
+            )
         values.sort(key=lambda x: x.distance_to_reference_value)
 
     @staticmethod
@@ -252,14 +261,18 @@ class Coordinate(Value):
         return Coordinate.reference_value
 
     def __eq__(self, other):
-        if self.value.coordinate_lat == other.value.coordinate_lat and \
-                self.value.coordinate_lon == other.value.coordinate_lon:
+        if (
+            self.value.coordinate_lat == other.value.coordinate_lat
+            and self.value.coordinate_lon == other.value.coordinate_lon
+        ):
             return True
         else:
             return False
 
     def __lt__(self, other):
-        return self.distance(Coordinate.reference_value) < other.distance(Coordinate.reference_value)
+        return self.distance(Coordinate.reference_value) < other.distance(
+            Coordinate.reference_value
+        )
 
     def __str__(self):
         s = ""

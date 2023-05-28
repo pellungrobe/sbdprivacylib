@@ -11,6 +11,7 @@ class Plain_categorical(Value):
     Class that implements the necessary methods to deal with attribute type Plain categorical
 
     """
+
     reference_value = None
     rank_values = {}
 
@@ -140,8 +141,8 @@ class Plain_categorical(Value):
         control = {}
         for rank, item in enumerate(c):
             value = item[0]
-            control[value] = rank+1
-            Plain_categorical.rank_values[rank+1] = value.value
+            control[value] = rank + 1
+            Plain_categorical.rank_values[rank + 1] = value.value
         for value in values:
             value.rank = control[value]
 
@@ -258,7 +259,9 @@ class Plain_categorical(Value):
         return self.value == value.value
 
     def __lt__(self, other):
-        return self.distance(Plain_categorical.reference_value) < other.distance(Plain_categorical.reference_value)
+        return self.distance(Plain_categorical.reference_value) < other.distance(
+            Plain_categorical.reference_value
+        )
 
     def __cmp__(self, value):
         if self.value < value.value:

@@ -9,7 +9,16 @@ def date_time_precision(dt, precision):
     elif precision == "Hour" or precision == "hour":
         result += str(dt.year) + str(dt.month) + str(dt.day) + str(dt.month)
     elif precision == "Minute" or precision == "minute":
-        result += str(dt.year) + str(dt.month) + str(dt.day) + str(dt.month) + str(dt.minute)
+        result += (
+            str(dt.year) + str(dt.month) + str(dt.day) + str(dt.month) + str(dt.minute)
+        )
     elif precision == "Second" or precision == "second":
-        result += str(dt.year) + str(dt.month) + str(dt.day) + str(dt.month) + str(dt.minute) + str(dt.second)
+        result += (
+            str(dt.year)
+            + str(dt.month)
+            + str(dt.day)
+            + str(dt.month)
+            + str(dt.minute)
+            + str(dt.second)
+        )
     return result

@@ -6,6 +6,7 @@ class Disclosure_risk_result:
     (See also the files "test_k_anonymity.py", "test_k_t_closeness.py" and "test_differential_privacy.py"
      in the folder "tests")
     """
+
     def __init__(self, disclosure_risk, dataset_size):
         """Constructor, creates an instance of a disclosure risk result
 
@@ -24,7 +25,5 @@ class Disclosure_risk_result:
         self.percen = (self.disclosure_risk / dataset_size) * 100
 
     def description(self):
-        """Shows the results description of the disclosure risk calculation
-
-        """
+        """Shows the results description of the disclosure risk calculation"""
         print(f"Disclosure risk: {self.disclosure_risk:.3f} ({self.percen:.2f}%)")

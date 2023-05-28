@@ -1,10 +1,14 @@
 from abc import ABC, abstractmethod
-from privlib.anonymization.src.entities.information_loss_result import Information_loss_result
+from privlib.anonymization.src.entities.information_loss_result import (
+    Information_loss_result,
+)
 from privlib.anonymization.src.utils.sensitivity_type import Sensitivity_type
 import pandas as pd
 from IPython.display import display
 import copy
-from privlib.anonymization.src.entities.disclosure_risk_result import Disclosure_risk_result
+from privlib.anonymization.src.entities.disclosure_risk_result import (
+    Disclosure_risk_result,
+)
 from privlib.anonymization.src.entities.dataset import Dataset
 from privlib.anonymization.src.entities.dataset_SPF import Dataset_SPF
 from privlib.anonymization.src.entities.record import Record
@@ -29,6 +33,7 @@ class Anonymization_scheme(ABC):
     .. [4] Josep Domingo-Ferrer and Vicenç Torra, "Disclosure risk assessment in statistical data protection", Journal of Computational and Applied Mathematics, Vol. 164, pp. 285-293, Mar 2004. DOI: https://doi.org/10.1016/S0377-0427(03)00643-5
 
     """
+
     def __init__(self, original_dataset):
         """Constructor, called from inherited classes
 
@@ -129,15 +134,19 @@ class Anonymization_scheme(ABC):
                 values.append(anonymized_dataset.records[j].values[i])
             mean = anonymized_dataset.records[0].values[i].calculate_mean(values)
             anonymized_mean.append(mean)
-            variance = anonymized_dataset.records[0].values[i].calculate_variance(values)
+            variance = (
+                anonymized_dataset.records[0].values[i].calculate_variance(values)
+            )
             anonymized_variance.append(variance)
 
-        information_loss = Information_loss_result(SSE,
-                                                   attribute_name,
-                                                   original_mean,
-                                                   anonymized_mean,
-                                                   original_variance,
-                                                   anonymized_variance)
+        information_loss = Information_loss_result(
+            SSE,
+            attribute_name,
+            original_mean,
+            anonymized_mean,
+            original_variance,
+            anonymized_variance,
+        )
 
         return information_loss
 
@@ -152,12 +161,18 @@ class Anonymization_scheme(ABC):
             desired path to save the anonymized dataset.
         """
         file = open(path, "w")
-        file.write(Anonymization_scheme.list_to_string(self.anonymized_dataset.header,
-                                                       self.anonymized_dataset.separator))
+        file.write(
+            Anonymization_scheme.list_to_string(
+                self.anonymized_dataset.header, self.anonymized_dataset.separator
+            )
+        )
         file.write("\n")
         for record in self.anonymized_dataset.records:
-            file.write(Anonymization_scheme.list_to_string(record.values,
-                                                           self.anonymized_dataset.separator))
+            file.write(
+                Anonymization_scheme.list_to_string(
+                    record.values, self.anonymized_dataset.separator
+                )
+            )
             file.write("\n")
         file.close()
         display("Dataset saved: " + path)
@@ -197,12 +212,16 @@ class Anonymization_scheme(ABC):
                     name = self.anonymized_dataset.header[i]
                     attribute = self.anonymized_dataset.attributes[name]
                     sensitivity = attribute.sensitivity_type
-                    if sensitivity != Sensitivity_type.QUASI_IDENTIFIER.value and \
-                            sensitivity != Sensitivity_type.IDENTIFIER.value:
+                    if (
+                        sensitivity != Sensitivity_type.QUASI_IDENTIFIER.value
+                        and sensitivity != Sensitivity_type.IDENTIFIER.value
+                    ):
                         continue
                     value_ori = self.anonymized_dataset.spf.iloc[j, i]
                     if name == "elements":
-                        self.anonymized_dataset.spf.drop('elements', inplace=True, axis=1)
+                        self.anonymized_dataset.spf.drop(
+                            "elements", inplace=True, axis=1
+                        )
                         elements = []
                         for record in self.anonymized_dataset.records:
                             value_anom = record.values[i].value
@@ -216,8 +235,10 @@ class Anonymization_scheme(ABC):
                         value_anom = type(value_ori)(value_anom)
                         self.anonymized_dataset.spf.iloc[j, i] = value_anom
         else:
-            raise TypeError(f"Sequential Privacy Frame format required for original dataset : "
-                            f"{type(self.original_dataset)}")
+            raise TypeError(
+                f"Sequential Privacy Frame format required for original dataset : "
+                f"{type(self.original_dataset)}"
+            )
 
         return self.anonymized_dataset.spf
 
@@ -261,7 +282,7 @@ class Anonymization_scheme(ABC):
         total_prob = 0
         min_rec = None
         for record_anom in tqdm(anonymized_dataset.records):
-            min_dist = float('inf')
+            min_dist = float("inf")
             for record_ori in original_dataset.records:
                 dist = record_ori.distance(record_anom)
                 if dist < min_dist:
@@ -276,7 +297,9 @@ class Anonymization_scheme(ABC):
         return Disclosure_risk_result(total_prob, len(anonymized_dataset))
 
     @staticmethod
-    def calculate_fast_record_linkage(original_dataset, anonymized_dataset, window_size=None):
+    def calculate_fast_record_linkage(
+        original_dataset, anonymized_dataset, window_size=None
+    ):
         """calculate_fast_record_linkage
 
         Function to Calculates the disclosure risk of the anonymized data set by comparing it with
@@ -301,12 +324,15 @@ class Anonymization_scheme(ABC):
         See Also
         --------
         :class:`Disclosure_risk_result`
-         """
+        """
         if window_size is None:
             window_size = (len(original_dataset) * constants.WINDOW_SIZE) / 100
             if window_size < 1.0:
                 window_size = len(original_dataset)
-        print("Calculating fast record linkage (disclosure risk), window size = " + str(window_size))
+        print(
+            "Calculating fast record linkage (disclosure risk), window size = "
+            + str(window_size)
+        )
         Dataset.calculate_standard_deviations(original_dataset.records)
         Record.set_reference_record(original_dataset)
         Record.calculate_distances_to_reference_record(anonymized_dataset.records)
@@ -323,15 +349,17 @@ class Anonymization_scheme(ABC):
             ids[record].append(record.id)
 
         original_dataset.records.sort(key=lambda x: x.distance_to_reference_record)
-        distances = [record.distance_to_reference_record for record in original_dataset.records]
+        distances = [
+            record.distance_to_reference_record for record in original_dataset.records
+        ]
 
         min_rec = None
         total_prob = 0
         for record_anom in tqdm(anonymized_dataset.records):
-            closest_records = utils.take_closest_window(distances,
-                                                        record_anom.distance_to_reference_record,
-                                                        window_size)
-            min_dist = float('inf')
+            closest_records = utils.take_closest_window(
+                distances, record_anom.distance_to_reference_record, window_size
+            )
+            min_dist = float("inf")
             for pos in closest_records:
                 record = original_dataset.records[pos]
                 dist = record.distance_all_attributes(record_anom)
@@ -355,6 +383,6 @@ class Anonymization_scheme(ABC):
         for value in list_to:
             s += str(value)
             s += separator
-        s = s[:len(s) - 1]
+        s = s[: len(s) - 1]
 
         return s

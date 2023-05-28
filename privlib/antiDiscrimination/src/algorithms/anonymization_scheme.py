@@ -20,6 +20,7 @@ class Anonymization_scheme(ABC):
            DOI: https://doi.org/10.1109/TKDE.2012.72
 
     """
+
     def __init__(self, original_dataset):
         """Constructor, called from inherited classes
 
@@ -42,7 +43,7 @@ class Anonymization_scheme(ABC):
 
         Function to perform the anonymization (anti-discrimination) of the dataset given in the constructor
         Abstract method, all anonymization methods must implement it.
-         """
+        """
         pass
 
     @abstractmethod
@@ -65,12 +66,18 @@ class Anonymization_scheme(ABC):
             desired path to save the anonymized dataset.
         """
         file = open(path, "w")
-        file.write(Anonymization_scheme.list_to_string(self.anonymized_dataset.header,
-                                                       self.anonymized_dataset.separator))
+        file.write(
+            Anonymization_scheme.list_to_string(
+                self.anonymized_dataset.header, self.anonymized_dataset.separator
+            )
+        )
         file.write("\n")
         for record in self.anonymized_dataset.records:
-            file.write(Anonymization_scheme.list_to_string(record.values,
-                                                           self.anonymized_dataset.separator))
+            file.write(
+                Anonymization_scheme.list_to_string(
+                    record.values, self.anonymized_dataset.separator
+                )
+            )
             file.write("\n")
         file.close()
         display("Dataset saved: " + path)
@@ -99,6 +106,6 @@ class Anonymization_scheme(ABC):
         for value in list_to:
             s += str(value)
             s += separator
-        s = s[:len(s) - 1]
+        s = s[: len(s) - 1]
 
         return s

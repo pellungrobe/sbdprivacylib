@@ -22,6 +22,7 @@ class Dataset(ABC):
      in the folder "tests")
 
     """
+
     def __init__(self, name, settings_path, attrs_settings, separator, sample=None):
         """Constructor, creates an instance of a dataset
 
@@ -102,7 +103,12 @@ class Dataset(ABC):
             if attribute_name in self.attributes:
                 self.header.append(attribute_name)
             else:
-                raise ValueError("(" + attribute_name + ") " + "Attribute name in header not found in settings file")
+                raise ValueError(
+                    "("
+                    + attribute_name
+                    + ") "
+                    + "Attribute name in header not found in settings file"
+                )
         Record.header = self.header
 
     def load_available_attribute_types(self):
@@ -160,8 +166,9 @@ class Dataset(ABC):
                 attribute_type = attribute.getAttribute(constants.ATTRIBUTE_TYPE)
                 min_value = attribute.getAttribute(constants.MIN_VALUE)
                 max_value = attribute.getAttribute(constants.MAX_VALUE)
-                attribute = Attribute(name, attribute_type, sensitivity_type,
-                                      min_value, max_value)
+                attribute = Attribute(
+                    name, attribute_type, sensitivity_type, min_value, max_value
+                )
                 self.attributes[name] = attribute
                 self.num_attr += 1
                 if sensitivity_type == Sensitivity_type.QUASI_IDENTIFIER.value:
@@ -176,8 +183,9 @@ class Dataset(ABC):
                     min_value = self.attrs_settings[name][constants.MIN_VALUE]
                 if constants.MAX_VALUE in self.attrs_settings[name].keys():
                     max_value = self.attrs_settings[name][constants.MAX_VALUE]
-                attribute = Attribute(name, attribute_type, sensitivity_type,
-                                      min_value, max_value)
+                attribute = Attribute(
+                    name, attribute_type, sensitivity_type, min_value, max_value
+                )
                 self.attributes[name] = attribute
                 self.num_attr += 1
                 if sensitivity_type == Sensitivity_type.QUASI_IDENTIFIER.value:
@@ -199,7 +207,7 @@ class Dataset(ABC):
             row = [atribute.name, atribute.attribute_type, atribute.sensitivity_type]
             table.append(row)
         df = pd.DataFrame(table, columns=["Name", "Attribute_type", "Sensitivity_type"])
-        df.style.set_caption('Attributes')
+        df.style.set_caption("Attributes")
         display(df)
         print("")
 
@@ -221,7 +229,9 @@ class Dataset(ABC):
             attr_data = []
             for j in range(len(records)):
                 attr_data.append(records[j].values[i])
-            standard_deviation = records[0].values[i].calculate_standard_deviation(attr_data)
+            standard_deviation = (
+                records[0].values[i].calculate_standard_deviation(attr_data)
+            )
             Record.standard_deviations.append(standard_deviation)
 
     def take_sample(self, sample):

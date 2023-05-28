@@ -11,6 +11,7 @@ class Dataset_SPF(Dataset):
     (See also the file "test_spf.py" in the folder "tests")
 
     """
+
     def __init__(self, spf, path_settings=None, attrs_settings=None, sample=None):
         """Constructor, creates an instance of a dataset loaded from a SPF (sequential privacy frame) object
 
@@ -78,9 +79,12 @@ class Dataset_SPF(Dataset):
         if self.settings_path is not None:
             for name in self.header:
                 attribute = self.attributes[name]
-                settings[attribute.name] = {constants.SENSITIVITY_TYPE: attribute.sensitivity_type,
-                                            constants.ATTRIBUTE_TYPE: self.available_attribute_types[
-                                                attribute.attribute_type]}
+                settings[attribute.name] = {
+                    constants.SENSITIVITY_TYPE: attribute.sensitivity_type,
+                    constants.ATTRIBUTE_TYPE: self.available_attribute_types[
+                        attribute.attribute_type
+                    ],
+                }
             self.spf.attrs["attrs_settings"] = settings
         elif self.attrs_settings is not None:
             self.spf.attrs["attrs_settings"] = self.attrs_settings

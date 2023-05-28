@@ -9,6 +9,7 @@ class Dataset_CSV(Dataset):
     (See also the file "anti_discrimination_test.py" in the folder "tests")
 
     """
+
     def __init__(self, dataset_path, separator, sample=None):
         """Constructor, creates an instance of a dataset loaded from a csv formatted file
 

@@ -11,6 +11,7 @@ class Numerical_continuous(Value):
     Class that implements the necessary methods to deal with attribute type numerical continuous values
 
     """
+
     decimals = 0
 
     def __init__(self, value):
@@ -71,7 +72,9 @@ class Numerical_continuous(Value):
             The value that is the centroid of the list of numerical continuous values.
         """
         # Avoiding unnecessary decimals
-        Numerical_continuous.decimals = Numerical_continuous.calculate_max_number_decimals(values)
+        Numerical_continuous.decimals = (
+            Numerical_continuous.calculate_max_number_decimals(values)
+        )
         if constants.EPSILON in kwargs.keys():
             centroid = Numerical_continuous.calculate_dp_centroid(values, **kwargs)
             return centroid
@@ -221,7 +224,7 @@ class Numerical_continuous(Value):
         mini = min(values)
         maxi = max(values)
         maxi_margin = maxi * margin
-        mini -= (maxi_margin - maxi)
+        mini -= maxi_margin - maxi
         maxi = maxi_margin
 
         return mini, maxi

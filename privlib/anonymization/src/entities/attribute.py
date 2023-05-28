@@ -1,4 +1,3 @@
-
 class Attribute:
     """Attribute
 
@@ -6,8 +5,8 @@ class Attribute:
     This class stores the information about an attribute in the dataset.
 
     """
-    def __init__(self, name, attribute_type, sensitivity_type,
-                 min_value, max_value):
+
+    def __init__(self, name, attribute_type, sensitivity_type, min_value, max_value):
         """Constructor, creates an instance of an attribute
 
         Parameters

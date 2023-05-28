@@ -10,6 +10,7 @@ class Dataset_CSV(Dataset):
      in the folder "tests")
 
     """
+
     def __init__(self, dataset_path, settings_path, separator, sample=None):
         """Constructor, creates an instance of a dataset loaded from a csv formatted file
 

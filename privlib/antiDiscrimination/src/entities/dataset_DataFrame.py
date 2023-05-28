@@ -10,6 +10,7 @@ class Dataset_DataFrame(Dataset):
     (See also the files "anti_discrimination_test.py" in the folder "tests")
 
     """
+
     def __init__(self, dataframe, sample=None):
         """Constructor, creates an instance of a dataset loaded from a pandas Dataframe
 

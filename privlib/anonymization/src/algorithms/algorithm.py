@@ -10,6 +10,7 @@ class Algorithm(ABC):
     Classes implementing a clustering algorithm must extend this class.
 
     """
+
     @staticmethod
     @abstractmethod
     def create_clusters(records, k):
@@ -78,4 +79,3 @@ class Algorithm(ABC):
     @abstractmethod
     def __str__(self):
         pass
-

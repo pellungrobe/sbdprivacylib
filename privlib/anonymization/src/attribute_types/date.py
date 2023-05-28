@@ -11,6 +11,7 @@ class Date(Value):
     Class that implements the necessary methods to deal with attribute type date values
 
     """
+
     def __init__(self, value):
         """Constructor, called from inherited classes
         Creates an instance of the attribute type for date values
