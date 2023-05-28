@@ -4,6 +4,8 @@ from sys import maxsize
 
 from pandas.errors import AbstractMethodError
 import pandas as pd
+from tqdm.auto import tqdm
+
 
 from . import constants
 from .attacks import BackgroundKnowledgeAttack
@@ -11,7 +13,7 @@ from .sequentialprivacyframe import SequentialPrivacyFrame
 
 __all__ = ["IndividualElementEvaluator", "IndividualSequenceEvaluator"]
 
-class SequentialRiskEvaluator(ABC):
+class SequencesRiskEvaluator(ABC):
     """SequentialRiskEvaluator
 
     Abstract class for a generic risk evaluator. It implements methods and function useful for any background knowledge
@@ -85,7 +87,7 @@ class SequentialRiskEvaluator(ABC):
         raise AbstractMethodError(self)
     
     @abstractmethod
-    def __risk(self, single_privacy_frame):
+    def risk(self, single_privacy_frame):
         """risk
 
         Computes the privacy risk for a single individual. Abstract method, all RiskEvaluators must implement it.
@@ -109,7 +111,7 @@ class SequentialRiskEvaluator(ABC):
         """
         raise AbstractMethodError(self)
     
-    def assess_risk(self, targets=None):
+    def assess_risk(self, targets=None, verbose=False, complete=False):
         """assess_risk
 
             Assesses privacy risk for the data fed to this evaluator, using the attack specified at evaluator construction.
@@ -133,11 +135,20 @@ class SequentialRiskEvaluator(ABC):
             targets = self.data[self.data[constants.USER_ID].isin(targets[constants.USER_ID])]
         else:
             raise AttributeError("Targets must be either a list of user_ids or a dataframe. Leave empty for total dataset assessment")
-        risks = targets.groupby(constants.USER_ID).apply(lambda x: self.__risk(x)).reset_index(
+        if verbose:
+            tqdm.pandas(desc="Risk progress")
+            risks = targets.groupby(constants.USER_ID).progress_apply(lambda x: self.risk(x,complete)).reset_index(
                 name=constants.PRIVACY_RISK)
+        else:
+            risks = targets.groupby(constants.USER_ID).apply(lambda x: self.risk(x,complete)).reset_index(
+                name=constants.PRIVACY_RISK)
+        if complete:
+            risks[['risk','cases']] = pd.DataFrame(risks['risk'].to_list(), index= risks.index)
+            risks = risks.explode('cases')
+            risks[['cases', 'case_risk']] = pd.DataFrame(risks['cases'].to_list(), index=risks.index)
         return risks
     
-class IndividualElementEvaluator(SequentialRiskEvaluator):
+class IndividualElementEvaluator(SequencesRiskEvaluator):
     """IndividualElementEvaluator
 
     Class for evaluating risk on individual level: risk is computed based on the whole data of each individual, i.e., each
@@ -164,6 +175,8 @@ class IndividualElementEvaluator(SequentialRiskEvaluator):
     .. [MOB2018] Roberto Pellungrini, Luca Pappalardo, Francesca Pratesi, Anna Monreale: Analyzing Privacy Risk in Human Mobility Data. STAF Workshops 2018: 114-129
     """
 
+    def __init__(self, data, attack, knowledge_length, **kwargs):
+        super().__init__(data, attack, knowledge_length, **kwargs)
     def background_knowledge_gen(self, single_priv_df):
         """background_knowledge_gen
 
@@ -187,7 +200,7 @@ class IndividualElementEvaluator(SequentialRiskEvaluator):
             cases = combinations(single_priv_df.values, self.knowledge_length)
         return cases
     
-    def __risk(self, single_privacy_frame):
+    def risk(self, single_privacy_frame, complete=False):
         """risk
 
         Computes the privacy risk for a single individual
@@ -205,13 +218,19 @@ class IndividualElementEvaluator(SequentialRiskEvaluator):
         """
         cases = self.background_knowledge_gen(single_privacy_frame)
         privacy_risk = 0
+        complete_risk = []
         for case in cases:
             case_risk = 1.0 / self.data.groupby(constants.USER_ID).apply(lambda x: self.attack.matching(x, case)).sum()
             if case_risk > privacy_risk:
                 privacy_risk = case_risk
-            if privacy_risk == 1:
+            if privacy_risk == 1 and not complete:
                 break
-        return privacy_risk
+            if complete:
+                complete_risk.append((case, case_risk))
+        if complete:
+            return [privacy_risk, complete_risk]
+        else:
+            return privacy_risk
     
     def aggregation_levels(self):
         """aggregation_levels
@@ -255,7 +274,8 @@ class IndividualSequenceEvaluator(IndividualElementEvaluator):
     .. [TIST2018] Roberto Pellungrini, Luca Pappalardo, Francesca Pratesi, and Anna Monreale. 2017. A Data Mining Approach to Assess Privacy Risk in Human Mobility Data. ACM Trans. Intell. Syst. Technol. 9, 3, Article 31 (December 2017), 27 pages. DOI: https://doi.org/10.1145/3106774
     .. [MOB2018] Roberto Pellungrini, Luca Pappalardo, Francesca Pratesi, Anna Monreale: Analyzing Privacy Risk in Human Mobility Data. STAF Workshops 2018: 114-129
     """
-    
+    def __init__(self, data, attack, knowledge_length, **kwargs):
+        super().__init__(data, attack, knowledge_length, **kwargs)
     def background_knowledge_gen(self, single_priv_df):
         """background_knowledge_gen
 
@@ -272,10 +292,10 @@ class IndividualSequenceEvaluator(IndividualElementEvaluator):
             cases : iterator
             an iterator over all possible combinations of data points, i.e., all possible background knowledge instances.
             """
-        cases = chain(*single_priv_df.groupby(constants.SEQUENCE_ID).apply(lambda x: super().background_knowledge_gen(x)))
+        cases = chain(*single_priv_df.groupby(constants.SEQUENCE_ID).apply(lambda x: super(IndividualSequenceEvaluator, self).background_knowledge_gen(x)))
         return cases
      
-    def __risk(self, single_privacy_frame):
+    def risk(self, single_privacy_frame, complete=False):
         """risk
 
         Computes the privacy risk for a single individual
@@ -293,6 +313,7 @@ class IndividualSequenceEvaluator(IndividualElementEvaluator):
         """
         cases = self.background_knowledge_gen(single_privacy_frame)
         privacy_risk = 0
+        complete_risk=[]
         for case in cases:
             num = single_privacy_frame.groupby([constants.SEQUENCE_ID]).apply(lambda x: self.attack.matching(x, case)).sum()
             den = self.data.groupby([constants.USER_ID, constants.SEQUENCE_ID]).apply(lambda x: self.attack.matching(x, case)).sum()
@@ -300,15 +321,19 @@ class IndividualSequenceEvaluator(IndividualElementEvaluator):
 
             if case_risk > privacy_risk:
                 privacy_risk = case_risk
-
-            if privacy_risk == 1:
+            if complete:
+                complete_risk.append((case, case_risk))
+            if privacy_risk == 1 and not complete:
                 break
-        return privacy_risk
-    
+        if complete:
+            return  [privacy_risk, complete_risk]
+        else:
+            return privacy_risk
+
     def aggregation_levels(self):
         """aggregation_levels
 
-        Allows attack preprocess to be dependant on the logic of the RiskEvaluator if needed.
+        Allows attack preprocess to be dependent on the logic of the RiskEvaluator if needed.
         For IndividualSequenceEvaluator, aggregation is done for each individual in the data and for each sequence and distinct
         element that belong to the individual.
 
