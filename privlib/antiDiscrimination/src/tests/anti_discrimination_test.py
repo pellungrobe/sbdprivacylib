@@ -1,6 +1,6 @@
-from antiDiscrimination.src.algorithms.anti_discrimination import Anti_discrimination
-from antiDiscrimination.src.entities.dataset_DataFrame import Dataset_DataFrame
-from antiDiscrimination.src.utils import utils
+from privlib.antiDiscrimination.src.algorithms.anti_discrimination import Anti_discrimination
+from privlib.antiDiscrimination.src.entities.dataset_DataFrame import Dataset_DataFrame
+from privlib.antiDiscrimination.src.utils import utils
 
 """
 References:

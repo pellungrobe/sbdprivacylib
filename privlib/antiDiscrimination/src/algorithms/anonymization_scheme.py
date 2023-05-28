@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import pandas as pd
 from IPython.display import display
-from antiDiscrimination.src.entities.dataset import Dataset
+from privlib.antiDiscrimination.src.entities.dataset import Dataset
 
 
 class Anonymization_scheme(ABC):

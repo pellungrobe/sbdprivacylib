@@ -1,10 +1,10 @@
-from antiDiscrimination.src.algorithms.anonymization_scheme import Anonymization_scheme
+from privlib.antiDiscrimination.src.algorithms.anonymization_scheme import Anonymization_scheme
 # from apyori import apriori
 import itertools
 from tqdm.auto import tqdm
 import pickle
 import copy
-from antiDiscrimination.src.entities.anti_discrimination_metrics import Anti_discrimination_metrics
+from privlib.antiDiscrimination.src.entities.anti_discrimination_metrics import Anti_discrimination_metrics
 
 
 class Anti_discrimination(Anonymization_scheme):

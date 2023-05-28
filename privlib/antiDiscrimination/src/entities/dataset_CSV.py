@@ -1,4 +1,4 @@
-from antiDiscrimination.src.entities.dataset import Dataset
+from privlib.antiDiscrimination.src.entities.dataset import Dataset
 
 
 class Dataset_CSV(Dataset):
