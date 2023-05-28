@@ -113,7 +113,7 @@ def PD2tranDB(df, na_values='NaN', one_hot_set=None):
     #print(one_hot_set)
     for _, row in df.iterrows():
         transaction = []
-        for att, item in row.iteritems():
+        for att, item in row.items():
             if item == na_values:
                 continue
             if item==0 and att in one_hot_set:
@@ -125,7 +125,7 @@ def PD2tranDB(df, na_values='NaN', one_hot_set=None):
                nitems += 1
             transaction.append(code)
         # append transaction
-        tDB.append(np.array(transaction, dtype=np.int))
+        tDB.append(np.array(transaction, dtype=int))
     # decode list
     #for k,v in codes.items():
     #    print(k, v) 
