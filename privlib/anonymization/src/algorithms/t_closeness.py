@@ -1,6 +1,6 @@
-from SBD_priv_lib.anonymization.src.algorithms.anonymization_scheme import Anonymization_scheme
-from SBD_priv_lib.anonymization.src.utils.sensitivity_type import Sensitivity_type
-from SBD_priv_lib.anonymization.src.utils import utils
+from privlib.anonymization.src.algorithms.anonymization_scheme import Anonymization_scheme
+from privlib.anonymization.src.utils.sensitivity_type import Sensitivity_type
+from privlib.anonymization.src.utils import utils
 import copy
 from timeit import default_timer as timer
 

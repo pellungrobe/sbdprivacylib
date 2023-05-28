@@ -1,5 +1,5 @@
-from SBD_priv_lib.anonymization.src.entities.dataset import Dataset
-from SBD_priv_lib.anonymization.src.utils import constants
+from privlib.anonymization.src.entities.dataset import Dataset
+from privlib.anonymization.src.utils import constants
 from IPython.display import display
 
 

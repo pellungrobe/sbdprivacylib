@@ -2,12 +2,12 @@ from abc import ABC, abstractmethod
 from xml.dom import minidom
 import pandas as pd
 from IPython.display import display
-from SBD_priv_lib.anonymization.src.entities.attribute import Attribute
-from SBD_priv_lib.anonymization.src.utils.utils import get_class
-from SBD_priv_lib.anonymization.src.attribute_types.attribute_type import Attribute_type
-from SBD_priv_lib.anonymization.src.entities.record import Record
-from SBD_priv_lib.anonymization.src.utils.sensitivity_type import Sensitivity_type
-from SBD_priv_lib.anonymization.src.utils import constants
+from privlib.anonymization.src.entities.attribute import Attribute
+from privlib.anonymization.src.utils.utils import get_class
+from privlib.anonymization.src.attribute_types.attribute_type import Attribute_type
+from privlib.anonymization.src.entities.record import Record
+from privlib.anonymization.src.utils.sensitivity_type import Sensitivity_type
+from privlib.anonymization.src.utils import constants
 import random
 
 

@@ -1,14 +1,14 @@
-from anonymization.src.entities.dataset_SPF import Dataset_SPF
-from anonymization.src.algorithms.mdav import Mdav
-from anonymization.src.algorithms.microaggregation import Microaggregation
-from anonymization.src.algorithms.k_anonymity import K_anonymity
-from anonymization.src.algorithms.differential_privacy import Differential_privacy
-from anonymization.src.algorithms.t_closeness import T_closeness
-from anonymization.src.algorithms.anonymization_scheme import Anonymization_scheme
-from risk_assessment.sequentialprivacyframe import SequentialPrivacyFrame
-from anonymization.src.utils import constants
-from anonymization.src.utils.sensitivity_type import Sensitivity_type
-from anonymization.src.attribute_types.attribute_type import Attribute_type
+from privlib.anonymization.src.entities.dataset_SPF import Dataset_SPF
+from privlib.anonymization.src.algorithms.mdav import Mdav
+from privlib.anonymization.src.algorithms.microaggregation import Microaggregation
+from privlib.anonymization.src.algorithms.k_anonymity import K_anonymity
+from privlib.anonymization.src.algorithms.differential_privacy import Differential_privacy
+from privlib.anonymization.src.algorithms.t_closeness import T_closeness
+from privlib.anonymization.src.algorithms.anonymization_scheme import Anonymization_scheme
+from privlib.riskAssessment.sequentialprivacyframe import SequentialPrivacyFrame
+from privlib.anonymization.src.utils import constants
+from privlib.anonymization.src.utils.sensitivity_type import Sensitivity_type
+from privlib.anonymization.src.attribute_types.attribute_type import Attribute_type
 
 """
 (See also examples of use in section 7 of the jupyter notebook: test_anonymization.ipynb)

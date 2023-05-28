@@ -1,16 +1,16 @@
 from abc import ABC, abstractmethod
-from SBD_priv_lib.anonymization.src.entities.information_loss_result import Information_loss_result
-from SBD_priv_lib.anonymization.src.utils.sensitivity_type import Sensitivity_type
+from privlib.anonymization.src.entities.information_loss_result import Information_loss_result
+from privlib.anonymization.src.utils.sensitivity_type import Sensitivity_type
 import pandas as pd
 from IPython.display import display
 import copy
-from SBD_priv_lib.anonymization.src.entities.disclosure_risk_result import Disclosure_risk_result
-from SBD_priv_lib.anonymization.src.entities.dataset import Dataset
-from SBD_priv_lib.anonymization.src.entities.dataset_SPF import Dataset_SPF
-from SBD_priv_lib.anonymization.src.entities.record import Record
+from privlib.anonymization.src.entities.disclosure_risk_result import Disclosure_risk_result
+from privlib.anonymization.src.entities.dataset import Dataset
+from privlib.anonymization.src.entities.dataset_SPF import Dataset_SPF
+from privlib.anonymization.src.entities.record import Record
 from tqdm.auto import tqdm
-from SBD_priv_lib.anonymization.src.utils import utils
-from SBD_priv_lib.anonymization.src.utils import constants
+from privlib.anonymization.src.utils import utils
+from privlib.anonymization.src.utils import constants
 
 
 class Anonymization_scheme(ABC):

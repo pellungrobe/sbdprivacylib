@@ -1,6 +1,6 @@
-from SBD_priv_lib.anonymization.src.attribute_types.value import Value
-from SBD_priv_lib.anonymization.src.utils import constants
-from SBD_priv_lib.anonymization.src.utils import utils
+from privlib.anonymization.src.attribute_types.value import Value
+from privlib.anonymization.src.utils import constants
+from privlib.anonymization.src.utils import utils
 import math
 
 

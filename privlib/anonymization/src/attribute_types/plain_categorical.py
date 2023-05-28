@@ -1,6 +1,6 @@
-from anonymization.src.attribute_types.value import Value
-from anonymization.src.utils import constants
-from anonymization.src.utils import utils
+from privlib.anonymization.src.attribute_types.value import Value
+from privlib.anonymization.src.utils import constants
+from privlib.anonymization.src.utils import utils
 import numpy as np
 from collections import Counter
 

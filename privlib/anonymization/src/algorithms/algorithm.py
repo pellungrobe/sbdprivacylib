@@ -1,4 +1,4 @@
-from SBD_priv_lib.anonymization.src.entities.record import Record
+from privlib.anonymization.src.entities.record import Record
 from abc import ABC, abstractmethod
 
 

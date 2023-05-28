@@ -1,5 +1,5 @@
 import math
-from anonymization.src.utils.sensitivity_type import Sensitivity_type
+from privlib.anonymization.src.utils.sensitivity_type import Sensitivity_type
 
 
 class Record:

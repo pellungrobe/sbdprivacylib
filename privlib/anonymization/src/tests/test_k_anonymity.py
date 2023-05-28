@@ -1,10 +1,10 @@
-from anonymization.src.entities.dataset_CSV import Dataset_CSV
-from anonymization.src.entities.dataset_DataFrame import Dataset_DataFrame
-from anonymization.src.algorithms.mdav import Mdav
-from anonymization.src.algorithms.microaggregation import Microaggregation
-from anonymization.src.algorithms.k_anonymity import K_anonymity
-from anonymization.src.utils import utils
-from anonymization.src.algorithms.anonymization_scheme import Anonymization_scheme
+from privlib.anonymization.src.algorithms.mdav import Mdav
+from privlib.anonymization.src.entities.dataset_CSV import Dataset_CSV
+from privlib.anonymization.src.entities.dataset_DataFrame import Dataset_DataFrame
+from privlib.anonymization.src.algorithms.microaggregation import Microaggregation
+from privlib.anonymization.src.algorithms.k_anonymity import K_anonymity
+from privlib.anonymization.src.utils import utils
+from privlib.anonymization.src.algorithms.anonymization_scheme import Anonymization_scheme
 
 """
 References:

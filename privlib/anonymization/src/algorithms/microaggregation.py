@@ -1,5 +1,5 @@
-from SBD_priv_lib.anonymization.src.algorithms.algorithm import Algorithm
-from SBD_priv_lib.anonymization.src.entities.dataset import Dataset
+from privlib.anonymization.src.algorithms.algorithm import Algorithm
+from privlib.anonymization.src.entities.dataset import Dataset
 from tqdm.auto import tqdm
 import copy
 

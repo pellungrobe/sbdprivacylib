@@ -1,4 +1,4 @@
-from SBD_priv_lib.anonymization.src.entities.dataset import Dataset
+from privlib.anonymization.src.entities.dataset import Dataset
 from IPython.display import display
 
 
