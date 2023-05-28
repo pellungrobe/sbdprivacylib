@@ -96,8 +96,8 @@ class TestSPF(unittest.TestCase):
         self.second_instance = pd.concat([traj[0:1], traj[3:4]]).values
 
     def test_spf(self):
-        SPF(self.fist_df, user_id='uid', datetime='datetime', elements=['lat', 'lng'])
-        self.assertEqual(SPF.columns, ['datetime',	'uid', 'elements',	'sequence',	'order'])
+        spf = SPF(self.fist_df, user_id='uid', datetime='datetime', elements=['lat', 'lng'])
+        self.assertEqual(spf.columns, pd.Index(['datetime', 'uid', 'elements', 'sequence', 'order'], dtype='object'))
 
 if __name__ == '__main__':
     unittest.main()
