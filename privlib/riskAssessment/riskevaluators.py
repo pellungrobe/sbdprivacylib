@@ -11,8 +11,8 @@ from .sequentialprivacyframe import SequentialPrivacyFrame
 
 __all__ = ["IndividualElementEvaluator", "IndividualSequenceEvaluator"]
 
-class RiskEvaluator(ABC):
-    """RiskEvaluator
+class SequentialRiskEvaluator(ABC):
+    """SequentialRiskEvaluator
 
     Abstract class for a generic risk evaluator. It implements methods and function useful for any background knowledge
     based attack simulation.
@@ -137,7 +137,7 @@ class RiskEvaluator(ABC):
                 name=constants.PRIVACY_RISK)
         return risks
     
-class IndividualElementEvaluator(RiskEvaluator):
+class IndividualElementEvaluator(SequentialRiskEvaluator):
     """IndividualElementEvaluator
 
     Class for evaluating risk on individual level: risk is computed based on the whole data of each individual, i.e., each
@@ -231,7 +231,7 @@ class IndividualElementEvaluator(RiskEvaluator):
 class IndividualSequenceEvaluator(IndividualElementEvaluator):
     """IndividualSequenceEvaluator
 
-    Class for evaluating risk on sequence level: risk is computed based on the differen sequences of each individual, i.e., each
+    Class for evaluating risk on sequence level: risk is computed based on the different sequences of each individual, i.e., each
     individual risk will be equal to the number of sequences in her own data divided by the total number of sequences
     belonging to other individuals in the data that match the background knowledge.
 
