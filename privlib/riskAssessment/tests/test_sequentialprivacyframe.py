@@ -1,5 +1,7 @@
 from privlib.riskAssessment import constants
 from privlib.riskAssessment.sequentialprivacyframe import SequentialPrivacyFrame as SPF
+from privlib.riskAssessment.riskevaluators import IndividualSequenceEvaluator, IndividualElementEvaluator
+import privlib.riskAssessment.attacks as att
 import numpy as np
 import pandas as pd
 import unittest
@@ -119,5 +121,37 @@ class TestSPF(unittest.TestCase):
         sec_sf = SPF(self.second_df, user_id='uid', datetime='datetime', elements=['lat', 'lng'], sequence_id='seq')
         self.assertEqual(list(sec_sf.sequence),l2)
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_casescomputation(self):
+        sf = SPF(self.second_df, user_id='uid', datetime='datetime', elements=['lat', 'lng'], sequence_id='seq')
+        iee = IndividualElementEvaluator(sf, att.SequenceAttack, 3)
+        a = iee.assess_risk(complete=True)
+        self.assertEqual(len(a), 473)
+        self.assertEqual(list(a.case_risk.unique()), [0.33333333333333333333, 0.5, 1])
+
+    def test_elementattack(self):
+        sf = SPF(self.second_df, user_id='uid', datetime='datetime', elements=['lat', 'lng'], sequence_id='seq')
+        iee = IndividualElementEvaluator(sf, att.ElementsAttack, 2)
+        ise = IndividualSequenceEvaluator(sf, att.ElementsAttack, 2)
+        a = iee.assess_risk()
+        b = ise.assess_risk(complete=True)
+        ra = [0.5, 1.0, 0.3333333333333333, 0.5]
+        rb = [0.5 for _ in range(31)]
+        rb.extend([1.0 for _ in range(2)])
+        rb.extend([0.3333333333333333 for _ in range(36)])
+        rb.extend([0.6666666666666666 for _ in range(18)])
+        self.assertEqual(a['risk'].to_list(), ra)
+        self.assertEqual(b['risk'].to_list(),rb)
+
+    def test_sequenceattack(self):
+        sf = SPF(self.second_df, user_id='uid', datetime='datetime', elements=['lat', 'lng'], sequence_id='seq')
+        iee = IndividualElementEvaluator(sf, att.SequenceAttack, 3)
+        ise = IndividualSequenceEvaluator(sf, att.SequenceAttack, 3)
+        a = iee.assess_risk()
+        b = ise.assess_risk()
+        ra = [1.0, 1.0, 0.3333333333333333, 1.0]
+        rb = [1.0, 1.0, 0.5, 1.0]
+        self.assertEqual(a['risk'].to_list(), ra)
+        self.assertEqual(b['risk'].to_list(), rb)
+
+    if __name__ == '__main__':
+        unittest.main()

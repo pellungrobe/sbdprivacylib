@@ -139,7 +139,6 @@ class SequenceAttack(BackgroundKnowledgeAttack):
         **kwargs : mapping, optional
             further arguments for preprocessing that can be passed from the RiskEvaluator, for example aggregation_levels
         """
-        data = data.reindex(columns=[constants.USER_ID, constants.DATETIME, constants.SEQUENCE_ID, constants.ELEMENTS])
         data.sort_values(by=[constants.USER_ID, constants.ORDER_ID], ascending=True, inplace=True)
         return data
     
