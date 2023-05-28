@@ -48,6 +48,46 @@ class BackgroundKnowledgeAttack(ABC):
         """
         raise AbstractMethodError(single_priv_df)
 
+class TabularAttack():
+    """TabularAttack
+
+        A Tabular Attack for Tabular data.
+
+        Parameters
+        ----------
+        data : DataFrame
+            the data on which to perform privacy risk assessment simulating this attack.
+
+        **kwargs : mapping, optional
+            a dictionary of keyword arguments passed into the preprocessing of attack.
+
+        """
+    def matching(single_priv_df, case, tolerance):
+        """matching
+        Matching function for the attack.
+        For TabularAttack, it checks all the values in the row under examination.
+
+        Parameters
+        ----------
+        single_priv_df : DataFrame
+            the data of a single individual.
+
+        case : tuple of tuples
+            the background knowledge instance.
+        Returns
+        -------
+        int
+            1 if the instance matches the single_priv_df, 0 otherwise.
+        """
+        for n, v in case:
+            bar = single_priv_df[n].values[0]
+            if type(v) == 'int' or type(v) == 'float':
+                if not (v < bar + bar * tolerance and v > bar - bar * tolerance):
+                    return 0
+            elif bar != v:
+                return 0
+        return 1
+
 class ElementsAttack(BackgroundKnowledgeAttack):
     """ElementsAttack
 
@@ -62,6 +102,7 @@ class ElementsAttack(BackgroundKnowledgeAttack):
         a dictionary of keyword arguments passed into the preprocessing of attack.
 
     """
+
     
     def preprocess(data, **kwargs):
         """preprocess
