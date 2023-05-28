@@ -26,11 +26,11 @@ References:
     to the xml file describing the attributes in the data set.
     Inside the xml file, there is a detailed descritpion about how to fill this xml file
     in order to properly configure the different attribute types in the data set  """
-# path_csv = "sbdprivacylib/data/anonymization/toy_all_types.csv"
-# path_settings = "sbdprivacylib/data/anonymization/metadata_toy_all_types.xml"
+# path_csv = "../../input_datasets/toy_all_types.csv"
+# path_settings = "../../input_datasets/metadata_toy_all_types.xml"
 # dataset = Dataset_CSV(path_csv, path_settings, ",")
-path_csv = "sbdprivacylib/data/anonymization/toy_all_types.csv"
-path_settings = ".sbdprivacylib/data/anonymization/metadata_toy_all_types.xml"
+path_csv = "../../input_datasets/toy_all_types.csv"
+path_settings = "../../input_datasets/metadata_toy_all_types.xml"
 data_frame = utils.read_dataframe_from_csv(path_csv)
 # dataset = Dataset_CSV(path_csv, path_settings, ",")
 dataset = Dataset_DataFrame(data_frame, path_settings)

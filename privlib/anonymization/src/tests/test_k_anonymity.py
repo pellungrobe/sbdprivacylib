@@ -27,8 +27,8 @@ References:
 # path_csv = "../../input_datasets/toy_all_types.csv"
 # path_settings = "../../input_datasets/metadata_toy_all_types.xml"
 # dataset = Dataset_CSV(path_csv, path_settings, ",")
-path_csv = "../../input_datasets/toy_all_types.csv"
-path_settings = "../../input_datasets/metadata_toy_all_types.xml"
+path_csv = "privlib/anonymization/input_datasets/input_datasets/toy_all_types.csv"
+path_settings = ".privlib/anonymization/input_datasets/metadata_toy_all_types.xml"
 data_frame = utils.read_dataframe_from_csv(path_csv)
 # dataset = Dataset_CSV(path_csv, path_settings, ",")
 dataset = Dataset_DataFrame(data_frame, path_settings)
@@ -57,7 +57,7 @@ disclosure_risk = Anonymization_scheme.calculate_fast_record_linkage(dataset, an
 disclosure_risk.description()
 
 """ Save the anonymizated data set to disk in csv format"""
-anonymization_scheme.save_anonymized_dataset("../../output_datasets/toy_all_types_anom.csv")
+anonymization_scheme.save_anonymized_dataset("privlib/anonymization/output_datasets/toy_all_types_anom.csv")
 
 """ The anonymized data set can be converted to pandas dataframe"""
 df_anonymized = anonymization_scheme.anonymized_dataset_to_dataframe()
