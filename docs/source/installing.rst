@@ -8,7 +8,7 @@ Before installing ``sbdprivlib``, you need to have setuptools installed.
 Quick install
 =============
 
-Get ``PackageName`` from the Python Package Index at pypl_.
+Get ``sbdprivlib`` from the Python Package Index at pypl_.
 
 or install it with
 
@@ -17,45 +17,8 @@ or install it with
     pip install sbdprivlib
 
 and an attempt will be made to find and install an appropriate version that matches your operating system and Python version.
-Please note that ``sbdprivlib`` requires Python>=3.9
+Please note that ``sbdprivlib`` requires Python>=3.10
 
-You can install the development version with
-
-.. code-block:: python
-
-    pip install git+https://github.com/USERNAME/project.git
-
-
-Alternatively, you can install using conda:
-
-.. code-block::
-
-    conda config --add channels package_owner_repository
-    conda config --add channels conda-forge
-    conda install package_name
-
-
-
-=====================
-Optional Dependencies
-=====================
-
-``PackageName`` relies on a few packages calling C code that can be cumbersome to install on Windows machines: to address such issue, the default installation does not try to install set up such requirements.
-
-Such a choice has been made to allow (even) Windows user to install the library and get access to its core functionalities.
-
-To made available (most of) the optional packages you can either:
-
-- (Windows) manually install the optional packages (versions details are specified in ``requirements_optional.txt``) following the original projects guidelines, or
-- (Linux/OSX) run the command:
-
-.. code-block:: python
-
-    pip install package_name[flag]
-
-
-
-Such caveat will install everything that can be easily automated under Linux/OSX.
 
 ======================
 Installing from source
@@ -63,7 +26,7 @@ Installing from source
 
 You can install from source by downloading a source archive file (tar.gz or zip) or by checking out the source files from the GitHub source code repository.
 
-``PackageName`` is a pure Python package; you don’t need a compiler to build or install it.
+``sbdprivlib`` is a pure Python package; you don’t need a compiler to build or install it.
 
 -------------------
 Source archive file
@@ -77,11 +40,11 @@ Run python setup.py install to build and install
 ------
 GitHub
 ------
-Clone the ``PackageName`` repostitory (see GitHub_ for options)
+Clone the ``sbdprivlib`` repostitory (see GitHub_ for options)
 
 .. code-block:: python
 
-    git clone https://github.com/USERNAME/project.git
+    git clone https://github.com/pellungrobe/sbdprivacylib.git
 
 Change directory to project
 
@@ -112,11 +75,26 @@ If you didn’t install in the standard Python site-packages directory you will 
 ============
 Requirements
 ============
-------
-Python
-------
 
-To use ``PackageName`` you need Python 3.8 or later.
+python>=3.10
+
+numpy>=1.24.3
+
+pandas>=1.5.3
+
+ipython>=8.12.0
+
+tqdm>=4.65.0
+
+nltk>=3.7
+
+setuptools>=66.0.0
+
+pyroaring>=0.4.2
+
+pyfim>=6.28
+
+To use ``sbdprivlib`` you need Python 3.10 or later.
 
 The easiest way to get Python and most optional packages is to install the Enthought Python distribution “Canopy” or using Anaconda.
 

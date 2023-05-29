@@ -22,7 +22,7 @@ preconfigured Jupyter Hub instances offered by the H2020 `SoBigData++`_ research
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 10
    :hidden:
 
    installing.rst

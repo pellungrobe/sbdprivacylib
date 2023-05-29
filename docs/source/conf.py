@@ -13,10 +13,28 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
+import sys
+import os
+import sphinx_rtd_theme
 
+
+html_theme = "sphinx_rtd_theme"
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+
+html_theme_options = {
+    "collapse_navigation": False,
+    "display_version": False,
+}
+# 'navigation_depth': 3,
+
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
+print('/Users/roberto/Documents/PrivacyLib/sbdprivacylib/sbdprivacylib')
+print(os.path.abspath("../"))
+sys.path.insert(0, os.path.abspath("../../"))
 
 # -- Project information -----------------------------------------------------
-
 project = 'SBD Privacy Lib'
 copyright = '2023, Roberto Pellungrini, Francesca Pratesi, Alberto Blanco Justica'
 author = 'Roberto Pellungrini, Francesca Pratesi, Alberto Blanco Justica'
@@ -31,8 +49,13 @@ release = '0.0.1'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.duration',
+    'sphinx.ext.doctest',
+    'sphinx.ext.autodoc',
+ 'sphinx.ext.autosummary',
+'numpydoc',
 ]
-
+numpydoc_show_inherited_class_members = False
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
