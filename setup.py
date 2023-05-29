@@ -51,7 +51,10 @@ setup(
     packages=find_packages(
         exclude=[
             "*.test",
+            "*.tests",
+            "tests.*",
             "*.test.*",
+            "*.tests.*",
             "test.*",
             "test",
             "privlib.test",
