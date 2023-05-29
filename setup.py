@@ -59,6 +59,7 @@ setup(
             "test",
             "privlib.test",
             "privlib.test.*",
+            "dist.*"
         ]
     ),
 )
