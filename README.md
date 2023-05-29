@@ -5,6 +5,10 @@
 ## License
 This project is licensed under the terms of the BSD-2-Clause license.
 
+## Documentation
+The full documentation is available here: [Documentation](https://pellungrobe.readthedocs.io/en/latest/)
+
+
 ## Acknowledgements
 This repository was developed within the [SoBigData++](https://sobigdata.d4science.org/group/sobigdata-gateway/explore?siteId=20371853) H2020 project training activities (WP4) to support "Social Mining and Big Data resources Integration" (WP8).
 
