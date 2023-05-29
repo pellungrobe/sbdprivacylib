@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
-__author__ = "PackageOwner"
+__author__ = "Pellungrini"
 __license__ = "BSD-2-Clause"
-__email__ = "email"
+__email__ = "roberto.pellungrini@sns.it"
 
 
 here = path.abspath(path.dirname(__file__))
@@ -21,10 +21,10 @@ setup(
     name="privlib",
     version="0.0.1",
     license="BSD-Clause-2",
-    description="Package description",
+    description="Privacy library of the SoBigData research infrastructure",
     url="https://github.com/USERNAME/project",
-    author="Author Name",
-    author_email="email",
+    author="Roberto Pellungrini",
+    author_email="roberto.pellungrini@sns.it",
     classifiers=[
         # How mature is this project? Common values are
         #   3 - Alpha
