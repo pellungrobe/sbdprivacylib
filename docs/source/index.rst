@@ -4,7 +4,7 @@
 
 .. |date| date::
 
-PackageName - Description
+sbdprivacylib - Description
 ===================================
 
 ``sbdprivlib`` is a Python software package to manage privacy risk and discrimination in tabular and sequential data.
