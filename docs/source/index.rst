@@ -7,10 +7,10 @@
 sbdprivacylib - Description
 ===================================
 
-``sbdprivlib`` is a Python software package to manage privacy risk and discrimination in tabular and sequential data.
+``privlib`` is a Python software package to manage privacy risk and discrimination in tabular and sequential data.
 It comprises methods to assess privacy risk ad discrimination, anonymize data according to various algorithms ann mitigate discrimination.
 
-If you would like to test ``PackageName`` functionalities without installing it on your machine consider using the
+If you would like to test ``privlib`` functionalities without installing it on your machine consider using the
 preconfigured Jupyter Hub instances offered by the H2020 `SoBigData++`_ research project.
 
 
@@ -30,5 +30,5 @@ preconfigured Jupyter Hub instances offered by the H2020 `SoBigData++`_ research
 
 .. _`Author 1`: Roberto Pellungrini, Francesca Pratesi
 .. _`Source`: https://github.com/pellungrobe/sbdprivlib
-.. _`Distribution`: https://pypi.python.org/pypi/sbdprivlib
+.. _`Distribution`: https://pypi.python.org/pypi/privlib
 .. _`SoBigData++`: https://sobigdata.d4science.org/group/sobigdata-gateway/explore?siteId=20371853

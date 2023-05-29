@@ -2,22 +2,22 @@
 Installing sbdprivlib
 ***********************
 
-Before installing ``sbdprivlib``, you need to have setuptools installed.
+Before installing ``privlib``, you need to have setuptools installed.
 
 =============
 Quick install
 =============
 
-Get ``sbdprivlib`` from the Python Package Index at pypl_.
+Get ``privlib`` from the Python Package Index at pypl_.
 
 or install it with
 
 .. code-block:: python
 
-    pip install sbdprivlib
+    pip install privlib
 
 and an attempt will be made to find and install an appropriate version that matches your operating system and Python version.
-Please note that ``sbdprivlib`` requires Python>=3.10
+Please note that ``privlib`` requires Python>=3.10
 
 
 ======================
@@ -26,7 +26,7 @@ Installing from source
 
 You can install from source by downloading a source archive file (tar.gz or zip) or by checking out the source files from the GitHub source code repository.
 
-``sbdprivlib`` is a pure Python package; you don’t need a compiler to build or install it.
+``privlib`` is a pure Python package; you don’t need a compiler to build or install it.
 
 -------------------
 Source archive file
@@ -40,11 +40,11 @@ Run python setup.py install to build and install
 ------
 GitHub
 ------
-Clone the ``sbdprivlib`` repostitory (see GitHub_ for options)
+Clone the ``privlib`` repostitory (see GitHub_ for options)
 
 .. code-block:: python
 
-    git clone https://github.com/pellungrobe/sbdprivacylib.git
+    git clone https://github.com/pellungrobe/privlib.git
 
 Change directory to project
 
@@ -94,7 +94,7 @@ pyroaring>=0.4.2
 
 pyfim>=6.28
 
-To use ``sbdprivlib`` you need Python 3.10 or later.
+To use ``privlib`` you need Python 3.10 or later.
 
 The easiest way to get Python and most optional packages is to install the Enthought Python distribution “Canopy” or using Anaconda.
 
