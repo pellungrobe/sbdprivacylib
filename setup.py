@@ -19,7 +19,7 @@ with open(path.join(here, "requirements.txt"), encoding="utf-8") as f:
 
 setup(
     name="privlib",
-    version="0.0.1",
+    version="0.0.2",
     license="BSD-Clause-3",
     description="Privacy library of the SoBigData research infrastructure",
     url="https://github.com/pellungrobe/sbdprivacylib",
