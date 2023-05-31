@@ -3,7 +3,7 @@
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## License
-This project is licensed under the terms of the BSD-2-Clause license.
+This project is licensed under the terms of the BSD-3-Clause license.
 
 ## Documentation
 The full documentation is available here: [Documentation](https://pellungrobe.readthedocs.io/en/latest/)
