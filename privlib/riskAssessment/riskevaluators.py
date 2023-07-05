@@ -128,7 +128,6 @@ class TabularRiskEvaluator:
                 .apply(lambda x: self.attack.matching(x, case, tolerance))
                 .sum()
             )
-            print(case_risk)
             if case_risk > privacy_risk:
                 privacy_risk = case_risk
             if privacy_risk == 1 and not complete:

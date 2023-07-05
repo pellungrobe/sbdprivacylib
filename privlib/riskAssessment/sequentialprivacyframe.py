@@ -129,7 +129,7 @@ class SequentialPrivacyFrame(pd.DataFrame):
                 )
             if not self._is_SequentialPrivacyFrame():
                 raise AttributeError(
-                    "Some attributes where not secified at creation, columns are:"
+                    "Some attributes where not specified at creation, columns are:"
                     + str(self.columns)
                     + " but ''(%s, %s, %s, %s, %s)'' are needed"
                     % (
